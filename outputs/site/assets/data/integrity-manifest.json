@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 35368,
-      "sha256": "594fd5a3478bdf96e149d0929fd2ab3a849561ff3a740d593957bff0db20478d"
+      "bytes": 36562,
+      "sha256": "ea3d93bd840cdde266313400ba4935b468230237375a4630c1eeffe8d3b97804"
     },
     {
       "path": "docs.html",
@@ -14,13 +14,13 @@
     },
     {
       "path": "styles.css",
-      "bytes": 15783,
-      "sha256": "14cbf25f4a114919d9f2df632f510795f12f7a1f62a838af616dce83465b4a54"
+      "bytes": 16255,
+      "sha256": "7c0099cfef54bf4264b48bb13569213b815b72b30537f16687dd41bcc600d470"
     },
     {
       "path": "app.js",
-      "bytes": 4465,
-      "sha256": "41a6f07114bb1686d8aa734f438d6dfc0cb54c9799af3ccd6769ff9e301cb222"
+      "bytes": 6113,
+      "sha256": "b66f939b5273a39a4ab5f50d8522355539000cb4ebd3ed29ec961ae79ac40c6e"
     },
     {
       "path": "docs.js",
@@ -54,8 +54,8 @@
     },
     {
       "path": "assets/data/site-data.js",
-      "bytes": 40840,
-      "sha256": "e70f7d892c5a9e143728ac7e75aa1b8c2de21832b591e0fddaf1acc473eefb5b"
+      "bytes": 43075,
+      "sha256": "8753df6f87ccb24a5743bee528731bf25ac2174d47b22dd9c3f2efc254b21549"
     },
     {
       "path": "assets/data/DATA_DICTIONARY.md",

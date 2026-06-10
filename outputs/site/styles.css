@@ -579,6 +579,40 @@ figcaption {
   font-size: 1.5rem;
 }
 
+.joint-panel {
+  margin: 22px 0 26px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.compact-heading {
+  max-width: 880px;
+  margin-bottom: 18px;
+}
+
+.compact-heading h3 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.joint-table {
+  box-shadow: none;
+}
+
+.joint-table table {
+  min-width: 900px;
+}
+
+.subtle {
+  display: inline-block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .interpretation-grid article,
 .question-list details {
   border: 1px solid var(--line);

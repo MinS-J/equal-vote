@@ -54,6 +54,22 @@ def format_percent(value: float | None) -> str:
     return f"{value * 100:.2f}%"
 
 
+def format_percent_precise(value: float | None) -> str:
+    if value is None:
+        return "-"
+    if value == 0:
+        return "0.0000%"
+    if value < 0.001:
+        return f"{value * 100:.4f}%"
+    return f"{value * 100:.3f}%"
+
+
+def format_inverse(value: float | None) -> str:
+    if not value:
+        return "-"
+    return f"약 1 / {round(1 / value):,}"
+
+
 def display_region(value: str) -> str:
     return str(value).replace("광주전남", "광주·전남")
 
@@ -206,6 +222,76 @@ def load_regional_observed_details(focus_dataset: str) -> dict:
     return {"regions": regions, "pairs": pairs}
 
 
+def joint_model_label(config: dict) -> str:
+    if config.get("prob_model") == "group":
+        return "모델 1"
+    weight = config.get("q_prior_weight")
+    if weight is None:
+        return "모델 2"
+    return f"모델 2 w={weight:g}"
+
+
+def load_joint_probabilities() -> dict:
+    candidates = list(
+        ANALYSIS_RESULTS_DIR.glob(
+            "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1"
+            "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+        )
+    )
+    if not candidates:
+        return {"events": {}, "models": []}
+
+    selected: dict[str, tuple[Path, dict]] = {}
+    for path in candidates:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        config = payload.get("config", {})
+        key = (
+            "model1"
+            if config.get("prob_model") == "group"
+            else f"model2-w{config.get('q_prior_weight')}"
+        )
+        iters = payload.get("joint", {}).get("iterations", 0)
+        previous = selected.get(key)
+        if previous is None or iters > previous[1].get("joint", {}).get("iterations", 0):
+            selected[key] = (path, payload)
+
+    order = {"model1": 0, "model2-w0.7": 1, "model2-w0.9": 2}
+    rows = []
+    for key, (path, payload) in sorted(selected.items(), key=lambda item: order.get(item[0], 99)):
+        joint = payload.get("joint", {})
+        config = payload.get("config", {})
+        p_a = joint.get("P_A")
+        p_b = joint.get("P_B")
+        p_ab = joint.get("P_A_and_B")
+        p_b_given_a = joint.get("P_B_given_A")
+        rows.append(
+            {
+                "label": joint_model_label(config),
+                "iterations": joint.get("iterations"),
+                "source": path.name,
+                "pA": p_a,
+                "pB": p_b,
+                "pAB": p_ab,
+                "pBGivenA": p_b_given_a,
+                "pAText": format_percent_precise(p_a),
+                "pBText": format_percent_precise(p_b),
+                "pABText": format_percent_precise(p_ab),
+                "pBGivenAText": format_percent_precise(p_b_given_a),
+                "pABInverseText": format_inverse(p_ab),
+                "successA": joint.get("success_count_A"),
+                "successB": joint.get("success_count_B"),
+                "successAB": joint.get("success_count_A_and_B"),
+            }
+        )
+
+    first = next(iter(selected.values()))[1] if selected else {}
+    return {
+        "events": first.get("events", {}),
+        "observed": first.get("observed", {}),
+        "models": rows,
+    }
+
+
 def main() -> None:
     equal_rows = read_csv("equal_pair_counts.csv")
     pair_rows = read_csv("pair_counts.csv")
@@ -297,6 +383,7 @@ def main() -> None:
         "pairCounts": pair_lookup,
         "regionalObserved": load_regional_observed_details(focus_dataset),
         "regionalThresholds": load_regional_thresholds(),
+        "jointProbabilities": load_joint_probabilities(),
         "nearMatch": {
             "model": "모델 2(Model 2) w=0.7",
             "iterations": 500,

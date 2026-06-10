@@ -444,7 +444,7 @@
         </div>
 
         <div class="simulation-layout">
-          <div class="simulation-card">
+          <div class="simulation-card" id="joint-summary">
             <span class="metric-label">결합확률 P(A∩B)</span>
             <strong>약 1 / 3,400 ~ 1 / 9,100</strong>
             <p>
@@ -461,6 +461,32 @@
               <code>P(A) * P(B)</code>가 아니라 같은 시뮬레이션 반복에서
               <code>P(A∩B)</code>를 직접 센다.
             </p>
+          </div>
+        </div>
+
+        <div class="joint-panel">
+          <div class="section-heading compact-heading">
+            <p class="eyebrow">사건별 확률</p>
+            <h3>각 사건은 얼마나 자주 나오고, 둘은 얼마나 자주 함께 나오나</h3>
+            <p>
+              아래의 P(A)와 P(B)는 각각의 사건을 따로 본 확률이다. 최종 결합 평가는
+              두 값을 곱하지 않고, 같은 반복 안에서 두 사건이 동시에 나온 비율 P(A∩B)를 직접 센다.
+            </p>
+          </div>
+          <div class="table-wrap joint-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>모델</th>
+                  <th>P(A)<br>분할동 1쌍 이상</th>
+                  <th>P(B)<br>광역권 8쌍 이상</th>
+                  <th>P(A∩B)<br>함께 발생</th>
+                  <th>P(B|A)<br>A가 나온 반복 중 B</th>
+                  <th>반복 수</th>
+                </tr>
+              </thead>
+              <tbody id="joint-probability-body"></tbody>
+            </table>
           </div>
         </div>
 

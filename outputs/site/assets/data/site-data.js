@@ -1661,6 +1661,71 @@ window.SITE_DATA = {
       }
     ]
   },
+  "jointProbabilities": {
+    "events": {
+      "A": "scope=same_eupmyeondong_stem, equal_pair_count >= 1",
+      "B": "scope=same_sido_gwangju_jeonnam, equal_pair_count >= 8"
+    },
+    "observed": {
+      "A_count": 1,
+      "B_count": 8,
+      "A_holds": true,
+      "B_holds": true
+    },
+    "models": [
+      {
+        "label": "모델 1",
+        "iterations": 200000,
+        "source": "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1_B-same_sido_gwangju_jeonnam-ge8_model-group-same_sigungu_qw0.7_pw0.7_turnout-current_200000.json",
+        "pA": 0.00767,
+        "pB": 0.01485,
+        "pAB": 0.000295,
+        "pBGivenA": 0.038461538461538464,
+        "pAText": "0.767%",
+        "pBText": "1.485%",
+        "pABText": "0.0295%",
+        "pBGivenAText": "3.846%",
+        "pABInverseText": "약 1 / 3,390",
+        "successA": 1534,
+        "successB": 2970,
+        "successAB": 59
+      },
+      {
+        "label": "모델 2 w=0.7",
+        "iterations": 200000,
+        "source": "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1_B-same_sido_gwangju_jeonnam-ge8_model-row_shrink-same_sigungu_qw0.7_pw0.7_turnout-current_200000.json",
+        "pA": 0.005865,
+        "pB": 0.008245,
+        "pAB": 0.00011,
+        "pBGivenA": 0.018755328218243817,
+        "pAText": "0.587%",
+        "pBText": "0.825%",
+        "pABText": "0.0110%",
+        "pBGivenAText": "1.876%",
+        "pABInverseText": "약 1 / 9,091",
+        "successA": 1173,
+        "successB": 1649,
+        "successAB": 22
+      },
+      {
+        "label": "모델 2 w=0.9",
+        "iterations": 200000,
+        "source": "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1_B-same_sido_gwangju_jeonnam-ge8_model-row_shrink-same_sigungu_qw0.9_pw0.9_turnout-current_200000.json",
+        "pA": 0.00748,
+        "pB": 0.012745,
+        "pAB": 0.000205,
+        "pBGivenA": 0.027406417112299467,
+        "pAText": "0.748%",
+        "pBText": "1.274%",
+        "pABText": "0.0205%",
+        "pBGivenAText": "2.741%",
+        "pABInverseText": "약 1 / 4,878",
+        "successA": 1496,
+        "successB": 2549,
+        "successAB": 41
+      }
+    ]
+  },
   "nearMatch": {
     "model": "모델 2(Model 2) w=0.7",
     "iterations": 500,
