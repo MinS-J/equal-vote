@@ -32,6 +32,7 @@ REQUIRED_HOME_MARKERS = [
     "관측 구조를 조건으로 두고",
     "각 사건은 얼마나 자주 나오고, 둘은 얼마나 자주 함께 나오나",
     "P(B|A)",
+    "모델 2(Model 2): 지역적응형 사후예측",
     "모델 검증: 근접 일치는 맞는데, 정확 일치는 높다",
     "50,000회 반복",
     "이 분석은 희귀성과 재현성을 평가할 뿐",
@@ -117,6 +118,13 @@ def require_text_markers(body: bytes, markers: list[str], label: str) -> None:
         raise AssertionError(f"{label} missing markers: {missing}")
 
 
+def require_text_order(body: bytes, markers: list[str], label: str) -> None:
+    text = body.decode("utf-8", errors="replace")
+    positions = [text.find(marker) for marker in markers]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        raise AssertionError(f"{label} markers out of order: {markers}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Verify a deployed production URL.")
     parser.add_argument("--base-url", required=True, help="Production URL, for example https://example.vercel.app")
@@ -132,6 +140,20 @@ def main() -> None:
         print(f"ok {path} {status} {len(body)} bytes")
 
     require_text_markers(responses["/"][1], REQUIRED_HOME_MARKERS, "home page")
+    require_text_order(
+        responses["/"][1],
+        ['<section id="history"', '<section id="simulation"', '<section id="regional"'],
+        "home page section order",
+    )
+    require_text_order(
+        responses["/"][1],
+        [
+            '<a href="#history">전국데이터</a>',
+            '<a href="#simulation">시뮬레이션</a>',
+            '<a href="#regional">지역분석</a>',
+        ],
+        "home page nav order",
+    )
     require_text_markers(responses["/docs.html"][1], REQUIRED_DOC_MARKERS, "docs.html")
     require_text_markers(responses["/docs.js"][1], REQUIRED_DOC_JS_MARKERS, "docs.js")
     require_text_markers(responses["/assets/data/site-data.js"][1], REQUIRED_DATA_MARKERS, "site-data.js")

@@ -107,7 +107,7 @@ if (nearMatchBody) {
 }
 
 if (jointSummary && data.jointProbabilities?.models?.length) {
-  const base = data.jointProbabilities.models.find((item) => item.label === "모델 2 w=0.7");
+  const base = data.jointProbabilities.models.find((item) => item.label.includes("w=0.7"));
   const first = data.jointProbabilities.models[0];
   const focus = base || first;
   const minInverse = data.jointProbabilities.models

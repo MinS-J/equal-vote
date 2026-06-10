@@ -1691,7 +1691,7 @@ window.SITE_DATA = {
         "successAB": 59
       },
       {
-        "label": "모델 2 w=0.7",
+        "label": "모델 2: 지역적응형 w=0.7",
         "iterations": 200000,
         "source": "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1_B-same_sido_gwangju_jeonnam-ge8_model-row_shrink-same_sigungu_qw0.7_pw0.7_turnout-current_200000.json",
         "pA": 0.005865,
@@ -1708,7 +1708,7 @@ window.SITE_DATA = {
         "successAB": 22
       },
       {
-        "label": "모델 2 w=0.9",
+        "label": "모델 2: 지역적응형 w=0.9",
         "iterations": 200000,
         "source": "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1_B-same_sido_gwangju_jeonnam-ge8_model-row_shrink-same_sigungu_qw0.9_pw0.9_turnout-current_200000.json",
         "pA": 0.00748,
@@ -1727,7 +1727,7 @@ window.SITE_DATA = {
     ]
   },
   "nearMatch": {
-    "model": "모델 2(Model 2) w=0.7",
+    "model": "모델 2(Model 2): 지역적응형 사후예측 w=0.7",
     "iterations": 500,
     "items": [
       {

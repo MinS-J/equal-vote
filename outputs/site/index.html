@@ -43,9 +43,9 @@
       <nav aria-label="주요 섹션">
         <a href="#case">사례</a>
         <a href="#scope">의심 포인트</a>
-        <a href="#regional">지역분석</a>
         <a href="#history">전국데이터</a>
         <a href="#simulation">시뮬레이션</a>
+        <a href="#regional">지역분석</a>
         <a href="#validation">모델검증</a>
         <a href="#method">기준</a>
         <a href="#interpretation">해석</a>
@@ -153,65 +153,6 @@
           </article>
         </div>
         <div class="scope-grid" id="scope-grid"></div>
-      </section>
-
-      <section id="regional" class="section section-band compact-band">
-        <div class="section-heading">
-          <p class="eyebrow">지역별 분석</p>
-          <h2>2026년 동일득표 쌍은 어디에 몰려 있었나</h2>
-          <p>
-            2026년 시·도지사 관내사전투표에서 광역권 기준 동일득표 쌍은
-            광주·전남 5쌍, 전북 2쌍, 인천 1쌍으로 관측됐다. 다만 해석은 관측 개수만 보지 않고,
-            모든 광역권에서 1개 이상부터 10개 이상까지 나올 확률을 따로 비교한다.
-          </p>
-        </div>
-        <div class="regional-layout">
-          <article class="regional-card">
-            <h3>관측 분포</h3>
-            <div id="regional-bars" class="region-bars" aria-label="지역별 관측 동일득표 쌍 수"></div>
-            <p>
-              광주·전남이 가장 많지만, 이는 광주와 전남을 하나의 광역권으로 묶은 정의,
-              작은 읍면 단위, 비슷한 후보별 득표율 구조가 함께 만든 결과일 수 있다.
-            </p>
-          </article>
-          <article class="regional-card">
-            <h3>왜 광주·전남이 두드러지나</h3>
-            <ul class="plain-list">
-              <li>지역별 지지율 구조가 다르면 후보별 득표 조합이 몰리는 위치도 달라진다.</li>
-              <li>선거인 수와 투표자 수가 비슷한 투표구가 많으면 같은 조합이 반복될 기회가 생긴다.</li>
-              <li>광주와 전남을 하나로 묶으면 서로 다른 시도의 비교쌍이 추가된다.</li>
-              <li>모델상 전라도권은 다른 권역보다 발생 확률이 높은 편이지만, 광주·전남 5쌍은 여전히 모델 평균보다 높다.</li>
-            </ul>
-          </article>
-        </div>
-        <div class="table-wrap regional-table">
-          <table>
-            <thead>
-              <tr>
-                <th>광역권</th>
-                <th>관측</th>
-                <th>모델 2 평균</th>
-                <th>1개 이상</th>
-                <th>2개 이상</th>
-                <th>3개 이상</th>
-                <th>4개 이상</th>
-                <th>5개 이상</th>
-                <th>6개 이상</th>
-                <th>7개 이상</th>
-                <th>8개 이상</th>
-                <th>9개 이상</th>
-                <th>10개 이상</th>
-                <th>비교 가능 쌍</th>
-              </tr>
-            </thead>
-            <tbody id="regional-probability-body"></tbody>
-          </table>
-        </div>
-        <p class="table-note">
-          확률은 모델 2(Model 2) w=0.7로 50,000회 반복했을 때 각 광역권에서 n개 이상 동일득표 쌍이 나올 비율이다.
-          지역별 지지율, 선거인 규모, 투표구 수가 달라 광역권마다 기준 확률도 크게 달라진다.
-        </p>
-        <div class="question-list regional-details" id="regional-pair-list"></div>
       </section>
 
       <section id="history" class="section">
@@ -440,6 +381,7 @@
           <p>
             여기서 말하는 확률은 선거 전 예측확률이 아니라, 공개 데이터에서 관측된 지역별
             구조를 받아들였을 때 같은 패턴이 얼마나 자주 재생성되는지 보는 사후예측(posterior predictive) 평가다.
+            기본 모델은 2026년 관측 구조를 조건으로 두고, 2022년 사전투표율 정보는 별도 민감도 분석으로 확인한다.
           </p>
         </div>
 
@@ -449,7 +391,7 @@
             <strong>약 1 / 3,400 ~ 1 / 9,100</strong>
             <p>
               200,000회 정밀화 기준 모델별 범위다. 기본 해석은 더 보수적인
-              <b>모델 2(Model 2) w=0.7</b>의 약 1 / 9,100을 중심에 둔다.
+              <b>모델 2: 지역적응형 사후예측 w=0.7</b>의 약 1 / 9,100을 중심에 둔다.
             </p>
           </div>
           <div class="event-card">
@@ -513,10 +455,11 @@
             </p>
           </article>
           <article>
-            <h3>모델 2(Model 2): 축소(shrinkage) 사후예측</h3>
+            <h3>모델 2(Model 2): 지역적응형 사후예측</h3>
             <p>
-              투표구별 관측값과 구시군 평균을 가중치 <code>w</code>로 섞는다. 표본이 큰
-              투표구는 좁게, 작은 투표구는 더 넓게 흔들리도록 둔다.
+              투표구별 관측값과 구시군 평균을 가중치 <code>w</code>로 섞어 지역 구조를 보존한다.
+              <code>w=0.7</code>은 투표구 고유값 70%, 구시군 평균 30%를 반영하고,
+              <code>w=0.9</code>는 투표구 고유값을 더 강하게 반영한 민감도 설정이다.
             </p>
           </article>
         </div>
@@ -526,15 +469,23 @@
           <div class="assumption-grid">
             <div>
               <span class="metric-label">사전투표율 사전분포(prior)</span>
-              <p>기본 분석은 2026년 해당 투표구의 관내사전투표율과 구시군 평균을 섞는다.</p>
+              <p>기본 분석은 2026년 해당 투표구의 관내사전투표율과 같은 구시군 평균을 <code>w</code>로 섞는다.</p>
             </div>
             <div>
               <span class="metric-label">후보별 득표율 사전분포(prior)</span>
-              <p>2026년 해당 투표구의 후보별 득표율과 구시군 후보별 평균을 섞는다.</p>
+              <p>2026년 해당 투표구의 후보별 득표율과 같은 구시군 후보별 평균을 <code>w</code>로 섞는다.</p>
+            </div>
+            <div>
+              <span class="metric-label">사후예측(posterior predictive)</span>
+              <p>그 사전분포를 받아들인 뒤, 각 반복에서 가상의 투표 결과를 다시 뽑고 동일득표 쌍 수를 새로 센다.</p>
+            </div>
+            <div>
+              <span class="metric-label">확률의 의미</span>
+              <p>따라서 표의 확률은 선거 전 예측값이 아니라, 관측된 지역 구조 안에서 같은 사건이 얼마나 자주 재현되는지에 대한 값이다.</p>
             </div>
             <div>
               <span class="metric-label">민감도 분석</span>
-              <p>사전투표율 사전분포를 2022년 같은 읍면동 정보로 바꿔도 방향이 크게 달라지는지 확인한다.</p>
+              <p>사전투표율 사전분포만 2022년 같은 읍면동 정보로 바꿔도 범위별 방향이 크게 달라지지 않는지 확인한다.</p>
             </div>
             <div>
               <span class="metric-label">사용 이유</span>
@@ -542,12 +493,65 @@
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="result-strip" aria-label="200,000회 결합사건 결과">
-          <div><span>모델 1</span><strong>0.0295%</strong><small>약 1 / 3,400</small></div>
-          <div><span>모델 2 w=0.7</span><strong>0.0110%</strong><small>약 1 / 9,100</small></div>
-          <div><span>모델 2 w=0.9</span><strong>0.0205%</strong><small>약 1 / 4,900</small></div>
+      <section id="regional" class="section section-band compact-band">
+        <div class="section-heading">
+          <p class="eyebrow">지역별 분석</p>
+          <h2>2026년 동일득표 쌍은 어디에 몰려 있었나</h2>
+          <p>
+            2026년 시·도지사 관내사전투표에서 광역권 기준 동일득표 쌍은
+            광주·전남 5쌍, 전북 2쌍, 인천 1쌍으로 관측됐다. 위의 확률 모델을 사용해,
+            관측 개수뿐 아니라 모든 광역권에서 1개 이상부터 10개 이상까지 나올 확률을 따로 비교한다.
+          </p>
         </div>
+        <div class="regional-layout">
+          <article class="regional-card">
+            <h3>관측 분포</h3>
+            <div id="regional-bars" class="region-bars" aria-label="지역별 관측 동일득표 쌍 수"></div>
+            <p>
+              광주·전남이 가장 많지만, 이는 광주와 전남을 하나의 광역권으로 묶은 정의,
+              작은 읍면 단위, 비슷한 후보별 득표율 구조가 함께 만든 결과일 수 있다.
+            </p>
+          </article>
+          <article class="regional-card">
+            <h3>왜 광주·전남이 두드러지나</h3>
+            <ul class="plain-list">
+              <li>지역별 지지율 구조가 다르면 후보별 득표 조합이 몰리는 위치도 달라진다.</li>
+              <li>선거인 수와 투표자 수가 비슷한 투표구가 많으면 같은 조합이 반복될 기회가 생긴다.</li>
+              <li>광주와 전남을 하나로 묶으면 서로 다른 시도의 비교쌍이 추가된다.</li>
+              <li>모델상 전라도권은 다른 권역보다 발생 확률이 높은 편이지만, 광주·전남 5쌍은 여전히 모델 평균보다 높다.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="table-wrap regional-table">
+          <table>
+            <thead>
+              <tr>
+                <th>광역권</th>
+                <th>관측</th>
+                <th>모델 2 평균</th>
+                <th>1개 이상</th>
+                <th>2개 이상</th>
+                <th>3개 이상</th>
+                <th>4개 이상</th>
+                <th>5개 이상</th>
+                <th>6개 이상</th>
+                <th>7개 이상</th>
+                <th>8개 이상</th>
+                <th>9개 이상</th>
+                <th>10개 이상</th>
+                <th>비교 가능 쌍</th>
+              </tr>
+            </thead>
+            <tbody id="regional-probability-body"></tbody>
+          </table>
+        </div>
+        <p class="table-note">
+          확률은 모델 2(Model 2): 지역적응형 사후예측 w=0.7로 50,000회 반복했을 때 각 광역권에서 n개 이상 동일득표 쌍이 나올 비율이다.
+          지역별 지지율, 선거인 규모, 투표구 수가 달라 광역권마다 기준 확률도 크게 달라진다.
+        </p>
+        <div class="question-list regional-details" id="regional-pair-list"></div>
       </section>
 
       <section id="method" class="section">
@@ -634,7 +638,7 @@
           <p class="eyebrow">모델 검증</p>
           <h2>모델 검증: 근접 일치는 맞는데, 정확 일치는 높다</h2>
           <p>
-            모델 2(Model 2) w=0.7로 ±1, ±2, ±3표 이내의 근접 일치까지 보면
+            모델 2(Model 2): 지역적응형 사후예측 w=0.7로 ±1, ±2, ±3표 이내의 근접 일치까지 보면
             실제 관측은 예측 구간에 대체로 들어온다. 반면 ±0, 즉 정확히 같은 쌍은
             예측 평균보다 높다.
           </p>
@@ -682,7 +686,7 @@
           </article>
           <article>
             <h3>모델의 한계</h3>
-            <p>시뮬레이션 결과는 사전분포(prior), 축소(shrinkage) 가중치, 비교 범위 같은 가정에 의존한다.</p>
+            <p>시뮬레이션 결과는 사전분포(prior), 지역적응형 가중치 <code>w</code>, 비교 범위 같은 가정에 의존한다.</p>
           </article>
           <article>
             <h3>자료의 한계</h3>

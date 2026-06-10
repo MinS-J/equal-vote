@@ -553,32 +553,6 @@ figcaption {
   margin-top: 0;
 }
 
-.result-strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.result-strip > div {
-  padding: 18px;
-  border-radius: 8px;
-  background: var(--soft);
-}
-
-.result-strip span,
-.result-strip small {
-  display: block;
-  color: var(--muted);
-  font-weight: 800;
-}
-
-.result-strip strong {
-  display: block;
-  margin: 4px 0;
-  font-size: 1.5rem;
-}
-
 .joint-panel {
   margin: 22px 0 26px;
   padding: 24px;
@@ -1051,8 +1025,7 @@ footer {
   .assumption-grid,
   .interpretation-grid,
   .insight-grid,
-  .limit-grid,
-  .result-strip {
+  .limit-grid {
     grid-template-columns: 1fr;
   }
 

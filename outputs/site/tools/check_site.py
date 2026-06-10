@@ -120,7 +120,9 @@ def check_site_data() -> None:
         '<th>광역권</th>',
         '<th>10개 이상</th>',
         '<span class="cell-main">10</span>',
-        "모델 2(Model 2) w=0.7",
+        "모델 2(Model 2): 지역적응형 사후예측 w=0.7",
+        "모델 2(Model 2): 지역적응형 사후예측",
+        "사후예측(posterior predictive)",
         "50,000회 반복",
         "각 사건은 얼마나 자주 나오고, 둘은 얼마나 자주 함께 나오나",
         '<tbody id="joint-probability-body"></tbody>',
@@ -138,6 +140,25 @@ def check_site_data() -> None:
     html_missing = [item for item in html_required if item not in html]
     if html_missing:
         raise AssertionError("index.html missing static history fallback: " + ", ".join(html_missing))
+
+    expected_section_order = [
+        '<section id="history"',
+        '<section id="simulation"',
+        '<section id="regional"',
+        '<section id="method"',
+    ]
+    positions = [html.find(marker) for marker in expected_section_order]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        raise AssertionError("Expected section order is history -> simulation -> regional -> method")
+
+    expected_nav_order = [
+        '<a href="#history">전국데이터</a>',
+        '<a href="#simulation">시뮬레이션</a>',
+        '<a href="#regional">지역분석</a>',
+    ]
+    nav_positions = [html.find(marker) for marker in expected_nav_order]
+    if any(position < 0 for position in nav_positions) or nav_positions != sorted(nav_positions):
+        raise AssertionError("Expected nav order is 전국데이터 -> 시뮬레이션 -> 지역분석")
 
     docs_required = [
         "재현성 문서",
