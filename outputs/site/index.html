@@ -383,6 +383,53 @@
             구조를 받아들였을 때 같은 패턴이 얼마나 자주 재생성되는지 보는 사후예측(posterior predictive) 평가다.
             기본 모델은 2026년 관측 구조를 조건으로 두고, 2022년 사전투표율 정보는 별도 민감도 분석으로 확인한다.
           </p>
+          <p class="inline-guide">
+            쉽게 말해, 실제 선거 데이터의 지역별 쏠림 특성을 시뮬레이션 프로그램에 넣고 같은 조건의 가상 선거를 20만 번 다시 치러 본 것이다.
+          </p>
+        </div>
+
+        <div class="simulation-infographic" aria-label="20만 번 다시 치러보는 시뮬레이션 흐름">
+          <div class="infographic-copy">
+            <p class="eyebrow">직관적 설명</p>
+            <h3>쉽게 말해, 같은 조건의 가상 선거를 20만 번 다시 치렀다</h3>
+            <p>
+              모델은 실제 데이터의 지역별 득표 쏠림을 지운 뒤 완전한 무작위로 던지는 방식이 아니다.
+              관측된 구조를 남겨 둔 상태에서 가상의 투표 결과를 반복 생성하고, 같은 패턴이 몇 번 다시 나오는지 센다.
+            </p>
+          </div>
+          <div class="infographic-flow">
+            <article>
+              <span class="step-number">1</span>
+              <h4>지역별 쏠림을 읽음</h4>
+              <p>투표구별 득표율과 같은 구시군 평균을 함께 본다.</p>
+              <div class="mini-stack" aria-hidden="true">
+                <span style="--height: 62%"></span>
+                <span style="--height: 82%"></span>
+                <span style="--height: 46%"></span>
+                <span style="--height: 70%"></span>
+              </div>
+            </article>
+            <article>
+              <span class="step-number">2</span>
+              <h4>가상 선거를 반복 생성</h4>
+              <p>그 구조를 넣고 200,000개의 결과를 다시 뽑는다.</p>
+              <div class="dot-field" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </article>
+            <article>
+              <span class="step-number">3</span>
+              <h4>A, B, A∩B를 셈</h4>
+              <p>송도 같은 사례와 광역권 8쌍 이상이 함께 나온 반복을 센다.</p>
+              <div class="event-badges" aria-hidden="true">
+                <b>A</b>
+                <b>B</b>
+                <b>A∩B</b>
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="simulation-layout">
@@ -392,6 +439,9 @@
             <p>
               200,000회 정밀화 기준 모델별 범위다. 기본 해석은 더 보수적인
               <b>모델 2: 지역적응형 사후예측 w=0.7</b>의 약 1 / 9,100을 중심에 둔다.
+            </p>
+            <p class="inline-guide">
+              쉽게 말해, 실제 지역별 득표 쏠림을 반영하되 투표구 값을 그대로 복사하지 않도록 조정한 모델을 중심값으로 본다.
             </p>
           </div>
           <div class="event-card">
@@ -403,6 +453,9 @@
               <code>P(A) * P(B)</code>가 아니라 같은 시뮬레이션 반복에서
               <code>P(A∩B)</code>를 직접 센다.
             </p>
+            <p class="inline-guide">
+              쉽게 말해, 송도 같은 좁은 사례와 광역권 8쌍 이상이 같은 가상 선거에서 함께 나온 경우만 따로 센 것이다.
+            </p>
           </div>
         </div>
 
@@ -413,6 +466,9 @@
             <p>
               아래의 P(A)와 P(B)는 각각의 사건을 따로 본 확률이다. 최종 결합 평가는
               두 값을 곱하지 않고, 같은 반복 안에서 두 사건이 동시에 나온 비율 P(A∩B)를 직접 센다.
+            </p>
+            <p class="inline-guide">
+              쉽게 말해, A와 B를 따로따로 계산해 곱한 값이 아니라 한 번의 반복 안에서 둘 다 일어났는지를 본다.
             </p>
           </div>
           <div class="table-wrap joint-table">
@@ -461,6 +517,9 @@
               <code>w=0.7</code>은 투표구 고유값 70%, 구시군 평균 30%를 반영하고,
               <code>w=0.9</code>는 투표구 고유값을 더 강하게 반영한 민감도 설정이다.
             </p>
+            <p class="inline-guide">
+              쉽게 말해, <code>w</code>는 투표구 고유값을 얼마나 강하게 반영할지 정하는 손잡이다.
+            </p>
           </article>
         </div>
 
@@ -478,6 +537,7 @@
             <div>
               <span class="metric-label">사후예측(posterior predictive)</span>
               <p>그 사전분포를 받아들인 뒤, 각 반복에서 가상의 투표 결과를 다시 뽑고 동일득표 쌍 수를 새로 센다.</p>
+              <p class="inline-guide">쉽게 말해, 이미 관측된 지역 구조를 받아들였을 때 비슷한 일이 얼마나 다시 생기는지 보는 검증이다.</p>
             </div>
             <div>
               <span class="metric-label">확률의 의미</span>

@@ -539,6 +539,158 @@ figcaption {
   margin-bottom: 18px;
 }
 
+.inline-guide {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  background: #eef8f6;
+  color: #43545a;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.simulation-infographic {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.48fr) minmax(0, 1fr);
+  gap: 22px;
+  align-items: stretch;
+  margin: 0 0 18px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(8, 125, 117, 0.08), rgba(31, 111, 139, 0.06)),
+    white;
+  box-shadow: var(--shadow);
+}
+
+.infographic-copy h3 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.22;
+}
+
+.infographic-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.infographic-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.infographic-flow article {
+  position: relative;
+  min-height: 210px;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(220, 227, 230, 0.9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.infographic-flow article + article::before {
+  content: "";
+  position: absolute;
+  top: 32px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px solid var(--teal);
+  border-right: 2px solid var(--teal);
+  transform: rotate(45deg);
+  background: transparent;
+}
+
+.step-number {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: white;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.infographic-flow h4 {
+  margin: 14px 0 6px;
+  font-size: 1.02rem;
+}
+
+.infographic-flow p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.mini-stack,
+.dot-field,
+.event-badges {
+  min-height: 62px;
+  margin-top: 16px;
+}
+
+.mini-stack {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+.mini-stack span {
+  width: 22%;
+  height: var(--height);
+  min-height: 22px;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, var(--teal), #9bcfca);
+}
+
+.dot-field {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  align-content: center;
+}
+
+.dot-field span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(31, 111, 139, 0.38);
+}
+
+.dot-field span:nth-child(5n),
+.dot-field span:nth-child(13) {
+  background: var(--red);
+}
+
+.event-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: center;
+}
+
+.event-badges b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.event-badges b:last-child {
+  background: var(--teal);
+  color: white;
+}
+
 .event-card,
 .assumption-panel {
   padding: 28px;
@@ -1002,6 +1154,7 @@ footer {
   .split,
   .sources,
   .simulation-layout,
+  .simulation-infographic,
   .regional-layout,
   .validation-layout,
   .doc-shell {
@@ -1024,6 +1177,7 @@ footer {
   .finding-grid,
   .scope-grid,
   .scope-story,
+  .infographic-flow,
   .method-grid,
   .model-grid,
   .assumption-grid,
@@ -1035,6 +1189,12 @@ footer {
 
   .hero-panel {
     margin-top: 8px;
+  }
+
+  .infographic-flow article + article::before {
+    top: -7px;
+    left: 28px;
+    transform: rotate(135deg);
   }
 }
 
