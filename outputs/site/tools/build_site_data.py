@@ -28,6 +28,11 @@ def to_int(value: str) -> int:
     return int(str(value).replace(",", "").strip())
 
 
+def to_float(value: str) -> float:
+    text = str(value).replace(",", "").strip()
+    return float(text) if text else 0.0
+
+
 def compact_dataset_name(name: str) -> str:
     text = "·".join(part.strip() for part in name.split("·"))
     text = text.replace("지선 ", "지선")
@@ -222,13 +227,97 @@ def load_regional_observed_details(focus_dataset: str) -> dict:
     return {"regions": regions, "pairs": pairs}
 
 
+def load_geo_adjacent_observed() -> dict:
+    counts_path = ANALYSIS_RESULTS_DIR / "geo_adjacent_observed_counts_dong_zip_matched_year.csv"
+    details_path = ANALYSIS_RESULTS_DIR / "geo_adjacent_observed_details_dong_zip_matched_year.csv"
+    if not counts_path.exists():
+        return {
+            "source": "",
+            "summary": {},
+            "focus": {},
+            "byKind": [],
+            "details": [],
+        }
+
+    rows = read_csv_path(counts_path)
+    details_rows = read_csv_path(details_path) if details_path.exists() else []
+    kind_order = ["대선", "총선", "지선"]
+    by_kind = []
+    for kind in kind_order:
+        subset = [row for row in rows if row.get("kind") == kind]
+        if not subset:
+            continue
+        by_kind.append(
+            {
+                "kind": kind,
+                "datasets": len(subset),
+                "rows": sum(to_int(row["rows"]) for row in subset),
+                "matchedRows": sum(to_int(row["matched_rows"]) for row in subset),
+                "equalAdjacent": sum(to_int(row["equal_edge_same_sigungu"]) for row in subset),
+                "equalAdjacentAll": sum(to_int(row["equal_edge_all"]) for row in subset),
+                "matchRateMin": min(to_float(row["match_rate"]) for row in subset),
+                "matchRateMax": max(to_float(row["match_rate"]) for row in subset),
+            }
+        )
+
+    focus = next(
+        (
+            row for row in rows
+            if row.get("dataset") == "지선9회(2026)·사전투표"
+        ),
+        {},
+    )
+    focus_payload = {}
+    if focus:
+        focus_payload = {
+            "dataset": focus["dataset"],
+            "boundary": f"{focus['boundary_year']}년 {focus['boundary_quarter']}",
+            "boundarySource": focus["boundary_source"],
+            "rows": to_int(focus["rows"]),
+            "matchedRows": to_int(focus["matched_rows"]),
+            "matchRate": to_float(focus["match_rate"]),
+            "edgePairs": to_int(focus["edge_pairs_same_sigungu"]),
+            "equalAdjacent": to_int(focus["equal_edge_same_sigungu"]),
+            "boundaryFile": Path(focus["boundary_file"]).name,
+        }
+
+    strict_details = [
+        row for row in details_rows
+        if row.get("scope") == "같은 시군구 경계인접"
+    ]
+    details = [
+        {
+            "dataset": row["dataset"],
+            "kind": row["kind"],
+            "boundary": f"{row['boundary_year']}년 {row['boundary_quarter']}",
+            "voteA": to_int(row["vote_a"]),
+            "voteB": to_int(row["vote_b"]),
+            "region1": row["region1"],
+            "region2": row["region2"],
+        }
+        for row in strict_details
+    ]
+
+    return {
+        "source": counts_path.name,
+        "detailsSource": details_path.name if details_path.exists() else "",
+        "summary": {
+            "totalStrictSameSigungu": sum(item["equalAdjacent"] for item in by_kind),
+            "totalStrictAll": sum(item["equalAdjacentAll"] for item in by_kind),
+        },
+        "focus": focus_payload,
+        "byKind": by_kind,
+        "details": details,
+    }
+
+
 def joint_model_label(config: dict) -> str:
     if config.get("prob_model") == "group":
         return "모델 1"
     weight = config.get("q_prior_weight")
     if weight is None:
-        return "모델 2"
-    return f"모델 2 w={weight:g}"
+        return "모델 2: 지역적응형"
+    return f"모델 2: 지역적응형 w={weight:g}"
 
 
 def load_joint_probabilities() -> dict:
@@ -383,9 +472,10 @@ def main() -> None:
         "pairCounts": pair_lookup,
         "regionalObserved": load_regional_observed_details(focus_dataset),
         "regionalThresholds": load_regional_thresholds(),
+        "geoAdjacent": load_geo_adjacent_observed(),
         "jointProbabilities": load_joint_probabilities(),
         "nearMatch": {
-            "model": "모델 2(Model 2) w=0.7",
+            "model": "모델 2(Model 2): 지역적응형 사후예측 w=0.7",
             "iterations": 500,
             "items": [
                 {"delta": "±0", "observed": 8, "mean": 2.6, "ci": "[0, 6]"},

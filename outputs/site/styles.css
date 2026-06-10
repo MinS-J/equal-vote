@@ -210,6 +210,7 @@ h3 {
 .event-card,
 .assumption-panel,
 .finding,
+.geo-adjacent-card,
 .regional-card,
 .validation-card,
 .chart-frame,
@@ -363,6 +364,110 @@ figcaption {
 
 .method-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.geo-adjacent-card {
+  margin-top: 22px;
+  padding: 24px;
+}
+
+.geo-adjacent-copy {
+  max-width: 880px;
+  margin-bottom: 18px;
+}
+
+.geo-adjacent-copy h3 {
+  margin: 4px 0 10px;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+}
+
+.geo-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.geo-metric-grid article {
+  min-height: 128px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.geo-metric-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.geo-metric-grid strong {
+  display: block;
+  margin: 8px 0 6px;
+  color: var(--ink);
+  font-size: clamp(1.7rem, 3vw, 2.45rem);
+  line-height: 1;
+}
+
+.geo-metric-grid p,
+.geo-pair-list p {
+  margin: 0;
+}
+
+.geo-adjacent-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(320px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.geo-count-panel {
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.geo-count-panel h4 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.geo-count-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.geo-count-table th,
+.geo-count-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.geo-count-table th {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.geo-pair-list {
+  display: grid;
+  gap: 10px;
+}
+
+.geo-pair-list p {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.geo-pair-list b {
+  color: var(--ink);
 }
 
 .model-grid,
@@ -1155,6 +1260,7 @@ footer {
   .sources,
   .simulation-layout,
   .simulation-infographic,
+  .geo-adjacent-body,
   .regional-layout,
   .validation-layout,
   .doc-shell {
@@ -1179,6 +1285,7 @@ footer {
   .scope-story,
   .infographic-flow,
   .method-grid,
+  .geo-metric-grid,
   .model-grid,
   .assumption-grid,
   .interpretation-grid,

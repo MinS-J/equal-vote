@@ -1661,6 +1661,77 @@ window.SITE_DATA = {
       }
     ]
   },
+  "geoAdjacent": {
+    "source": "geo_adjacent_observed_counts_dong_zip_matched_year.csv",
+    "detailsSource": "geo_adjacent_observed_details_dong_zip_matched_year.csv",
+    "summary": {
+      "totalStrictSameSigungu": 2,
+      "totalStrictAll": 2
+    },
+    "focus": {
+      "dataset": "지선9회(2026)·사전투표",
+      "boundary": "2025년 2Q",
+      "boundarySource": "dong-zip",
+      "rows": 3558,
+      "matchedRows": 3448,
+      "matchRate": 0.969084,
+      "edgePairs": 6659,
+      "equalAdjacent": 1,
+      "boundaryFile": "bnd_dong_00_2025_2Q.zip"
+    },
+    "byKind": [
+      {
+        "kind": "대선",
+        "datasets": 11,
+        "rows": 39078,
+        "matchedRows": 34533,
+        "equalAdjacent": 0,
+        "equalAdjacentAll": 0,
+        "matchRateMin": 0.521797,
+        "matchRateMax": 0.991406
+      },
+      {
+        "kind": "총선",
+        "datasets": 8,
+        "rows": 28069,
+        "matchedRows": 25346,
+        "equalAdjacent": 1,
+        "equalAdjacentAll": 1,
+        "matchRateMin": 0.882574,
+        "matchRateMax": 0.926521
+      },
+      {
+        "kind": "지선",
+        "datasets": 4,
+        "rows": 14136,
+        "matchedRows": 13732,
+        "equalAdjacent": 1,
+        "equalAdjacentAll": 1,
+        "matchRateMin": 0.969084,
+        "matchRateMax": 0.973789
+      }
+    ],
+    "details": [
+      {
+        "dataset": "총선 22대·본투표",
+        "kind": "총선",
+        "boundary": "2024년 2Q",
+        "voteA": 444,
+        "voteB": 56,
+        "region1": "전북특별자치도 고창군 부안면",
+        "region2": "전북특별자치도 고창군 심원면"
+      },
+      {
+        "dataset": "지선9회(2026)·사전투표",
+        "kind": "지선",
+        "boundary": "2025년 2Q",
+        "voteA": 3030,
+        "voteB": 1440,
+        "region1": "인천광역시 연수구 송도1동",
+        "region2": "인천광역시 연수구 송도2동"
+      }
+    ]
+  },
   "jointProbabilities": {
     "events": {
       "A": "scope=same_eupmyeondong_stem, equal_pair_count >= 1",

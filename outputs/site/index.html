@@ -397,6 +397,40 @@
             <p>유사 분할동 결과와 광역권 결과는 겹치는 비교쌍과 같은 지역별 잠재요인을 공유한다. 두 사건을 독립 증거처럼 단순 곱하지 않고, 같은 반복 안에서 함께 세었다.</p>
           </article>
         </div>
+
+        <div class="geo-adjacent-card" aria-labelledby="geo-adjacent-title">
+          <div class="geo-adjacent-copy">
+            <p class="eyebrow">실제 경계 검산</p>
+            <h3 id="geo-adjacent-title">분할동 기준을 실제 지리 인접 기준으로 다시 좁혀 봤다</h3>
+            <p>
+              분할동 쌍은 이름이 비슷한 읍면동을 묶은 근사 기준이며, 실제 지리적 인접 여부를 판정한 기준은 아니다.
+              그래서 SGIS 읍면동 경계에서 경계선을 공유하는 동만 따로 골라 같은 검사를 다시 했다.
+            </p>
+          </div>
+          <div id="geo-adjacent-summary" class="geo-metric-grid" aria-label="지리 인접 검산 핵심 수치"></div>
+          <div class="geo-adjacent-body">
+            <div class="geo-count-panel">
+              <h4>선거별 관측 결과</h4>
+              <table class="geo-count-table">
+                <thead>
+                  <tr>
+                    <th>구분</th>
+                    <th>관측</th>
+                    <th>매칭률 범위</th>
+                  </tr>
+                </thead>
+                <tbody id="geo-adjacent-counts"></tbody>
+              </table>
+            </div>
+            <div class="geo-count-panel">
+              <h4>실제 발견된 지리 인접 동일득표쌍</h4>
+              <div id="geo-adjacent-details" class="geo-pair-list"></div>
+            </div>
+          </div>
+          <p class="table-note">
+            기준은 선거연도에 가장 가까운 SGIS <code>bnd_dong</code> 읍면동 경계다. 2026년 지선은 현재 확보 가능한 최신 경계인 2025년 2분기를 사용했다.
+          </p>
+        </div>
       </section>
 
       <section id="simulation" class="section">
@@ -758,7 +792,7 @@
           </article>
           <article>
             <h3>지리적 인접의 한계</h3>
-            <p>분할동 쌍은 이름이 비슷한 읍면동을 묶은 근사 기준이다. 실제 경계를 맞댄 인접 동만 비교하면 쌍의 집합과 결과가 달라질 수 있다.</p>
+            <p>분할동 쌍은 이름이 비슷한 읍면동을 묶은 근사 기준이다. 보완 검산으로 SGIS 읍면동 경계 인접쌍을 따로 계산했지만, 선거 데이터명과 경계 데이터명이 완전히 1:1로 맞지는 않아 매칭된 범위 안에서 해석해야 한다.</p>
           </article>
           <article>
             <h3>해석의 한계</h3>
