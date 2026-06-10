@@ -146,22 +146,25 @@ def check_site_data() -> None:
 
     expected_section_order = [
         '<section id="history"',
-        '<section id="simulation"',
-        '<section id="regional"',
         '<section id="method"',
+        '<section id="simulation"',
+        '<section id="validation"',
+        '<section id="regional"',
     ]
     positions = [html.find(marker) for marker in expected_section_order]
     if any(position < 0 for position in positions) or positions != sorted(positions):
-        raise AssertionError("Expected section order is history -> simulation -> regional -> method")
+        raise AssertionError("Expected section order is history -> method -> simulation -> validation -> regional")
 
     expected_nav_order = [
         '<a href="#history">전국데이터</a>',
+        '<a href="#method">기준</a>',
         '<a href="#simulation">시뮬레이션</a>',
+        '<a href="#validation">모델검증</a>',
         '<a href="#regional">지역분석</a>',
     ]
     nav_positions = [html.find(marker) for marker in expected_nav_order]
     if any(position < 0 for position in nav_positions) or nav_positions != sorted(nav_positions):
-        raise AssertionError("Expected nav order is 전국데이터 -> 시뮬레이션 -> 지역분석")
+        raise AssertionError("Expected nav order is 전국데이터 -> 기준 -> 시뮬레이션 -> 모델검증 -> 지역분석")
 
     docs_required = [
         "재현성 문서",

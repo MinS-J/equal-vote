@@ -145,14 +145,22 @@ def main() -> None:
     require_text_markers(responses["/"][1], REQUIRED_HOME_MARKERS, "home page")
     require_text_order(
         responses["/"][1],
-        ['<section id="history"', '<section id="simulation"', '<section id="regional"'],
+        [
+            '<section id="history"',
+            '<section id="method"',
+            '<section id="simulation"',
+            '<section id="validation"',
+            '<section id="regional"',
+        ],
         "home page section order",
     )
     require_text_order(
         responses["/"][1],
         [
             '<a href="#history">전국데이터</a>',
+            '<a href="#method">기준</a>',
             '<a href="#simulation">시뮬레이션</a>',
+            '<a href="#validation">모델검증</a>',
             '<a href="#regional">지역분석</a>',
         ],
         "home page nav order",
