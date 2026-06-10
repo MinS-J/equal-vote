@@ -4,13 +4,13 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 35152,
-      "sha256": "59969dd56deef66fc4596334107b6b89243d93eae0918d04970ffdbf331ec9fe"
+      "bytes": 35368,
+      "sha256": "594fd5a3478bdf96e149d0929fd2ab3a849561ff3a740d593957bff0db20478d"
     },
     {
       "path": "docs.html",
-      "bytes": 2183,
-      "sha256": "fbc32553f0210a342ada2e91741c709e2734e7b20494f76f363cdd43e4fefef5"
+      "bytes": 2403,
+      "sha256": "6edbf18a0dc193bf8e5f28ad6775804de53fe6b6eaaf2b4f2b0a96f9aff02a7d"
     },
     {
       "path": "styles.css",

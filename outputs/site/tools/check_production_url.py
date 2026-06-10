@@ -40,6 +40,7 @@ REQUIRED_HOME_MARKERS = [
     "https://github.com/MinS-J/equal-vote",
     "https://github.com/MinS-J/equal-vote/releases/tag/v2026-06-10",
     "equal-vote-inputs.zip",
+    "/_vercel/insights/script.js",
 ]
 
 REQUIRED_DOC_MARKERS = [
@@ -48,6 +49,7 @@ REQUIRED_DOC_MARKERS = [
     "docs.js",
     "재현 가이드",
     "데이터 사전",
+    "/_vercel/insights/script.js",
 ]
 
 REQUIRED_DOC_JS_MARKERS = [
