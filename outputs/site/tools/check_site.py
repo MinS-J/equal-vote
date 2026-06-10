@@ -131,6 +131,8 @@ def check_site_data() -> None:
         '<tbody id="joint-probability-body"></tbody>',
         "P(B|A)",
         "지역 인구 구조 변동",
+        "지리적 인접의 한계",
+        "실제 지리적 인접 여부를 판정한 기준은 아니다",
         "이 분석은 희귀성과 재현성을 평가할 뿐",
         "공개 재현 패키지",
         "https://github.com/MinS-J/equal-vote",
