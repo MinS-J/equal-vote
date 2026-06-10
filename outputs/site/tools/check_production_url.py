@@ -36,6 +36,10 @@ REQUIRED_HOME_MARKERS = [
     "놀라운 관측과 부정의 증거는 같은 말이 아니다",
     "자료와 재현성",
     "./docs.html?file=guide",
+    "공개 재현 패키지",
+    "https://github.com/MinS-J/equal-vote",
+    "https://github.com/MinS-J/equal-vote/releases/tag/v2026-06-10",
+    "equal-vote-inputs.zip",
 ]
 
 REQUIRED_DOC_MARKERS = [

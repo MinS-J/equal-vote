@@ -773,6 +773,60 @@ tbody tr:hover {
   background: #f1fbf9;
 }
 
+.release-card {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.release-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.18rem;
+}
+
+.release-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.release-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 16px;
+}
+
+.release-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--teal);
+  border-radius: 8px;
+  background: var(--teal);
+  color: white;
+  font-weight: 800;
+}
+
+.release-actions a + a {
+  background: white;
+  color: var(--teal);
+}
+
+.release-files {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.release-files li + li {
+  margin-top: 6px;
+}
+
 .doc-page {
   padding-top: 74px;
 }

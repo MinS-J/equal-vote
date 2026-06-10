@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 34202,
-      "sha256": "5e7d25c22af952e07cb33232acfe1ced3ae30838869e70b0214c04509c7ac5d8"
+      "bytes": 35152,
+      "sha256": "59969dd56deef66fc4596334107b6b89243d93eae0918d04970ffdbf331ec9fe"
     },
     {
       "path": "docs.html",
@@ -14,8 +14,8 @@
     },
     {
       "path": "styles.css",
-      "bytes": 14957,
-      "sha256": "541cfe312ceae3261e86a9e6a17f2ecf798007e054c86e92d6f56196d9bca8b9"
+      "bytes": 15783,
+      "sha256": "14cbf25f4a114919d9f2df632f510795f12f7a1f62a838af616dce83465b4a54"
     },
     {
       "path": "app.js",
@@ -39,8 +39,8 @@
     },
     {
       "path": "assets/data/README.md",
-      "bytes": 2553,
-      "sha256": "691998a8f6b6391e7b72bd5894fdcfc00e68680785aa2bab4b5563c0441f50f1"
+      "bytes": 3147,
+      "sha256": "2ead04076f6760600f43683923a8c463f97d4e3e9640d513d3d9f11fb7882c2c"
     },
     {
       "path": "assets/data/equal_pair_counts.csv",

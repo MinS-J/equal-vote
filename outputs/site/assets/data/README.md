@@ -32,7 +32,7 @@
 아래 명령은 `work/` 코드 폴더에서 실행한다.
 
 ```powershell
-cd work
+cd C:\Users\minse\Documents\Codex\2026-06-10\goal-1\work\work
 python -m compileall .
 python run_pipeline.py --stage convert
 python run_pipeline.py --stage detect
@@ -71,3 +71,17 @@ python simulate_joint_events.py --dataset 2026 --sheet 시·도지사 --rows adv
 ```
 
 정밀 시뮬레이션은 시간이 오래 걸리므로 기본 파이프라인에는 포함하지 않는다.
+
+## Public Reproducibility Package
+
+공개 저장소와 다운로드 묶음은 아래 위치에 있다.
+
+- GitHub 저장소: https://github.com/MinS-J/equal-vote
+- GitHub Release: https://github.com/MinS-J/equal-vote/releases/tag/v2026-06-10
+
+Release 파일:
+
+- `equal-vote-code.zip`: 분석 코드와 사이트 소스
+- `equal-vote-inputs.zip`: 처음부터 재현할 때 필요한 원본 선거 데이터
+- `equal-vote-precomputed.zip`: 빠른 검증용 중간 데이터와 시뮬레이션 결과
+- `SHA256SUMS.txt`: ZIP 파일 체크섬
