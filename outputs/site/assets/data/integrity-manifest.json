@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-06-10",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 34202,
+      "sha256": "5e7d25c22af952e07cb33232acfe1ced3ae30838869e70b0214c04509c7ac5d8"
+    },
+    {
+      "path": "docs.html",
+      "bytes": 2183,
+      "sha256": "fbc32553f0210a342ada2e91741c709e2734e7b20494f76f363cdd43e4fefef5"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 14957,
+      "sha256": "541cfe312ceae3261e86a9e6a17f2ecf798007e054c86e92d6f56196d9bca8b9"
+    },
+    {
+      "path": "app.js",
+      "bytes": 4465,
+      "sha256": "41a6f07114bb1686d8aa734f438d6dfc0cb54c9799af3ccd6769ff9e301cb222"
+    },
+    {
+      "path": "docs.js",
+      "bytes": 5177,
+      "sha256": "de67211145c8cfca8e9c1d7d1d1b727bf4e08424a25cb4a70d3cc306096f5bf0"
+    },
+    {
+      "path": "assets/chart1_scope.png",
+      "bytes": 69504,
+      "sha256": "43a0f8d61a60afbf51609e8bf451888430bcee99476de5f9a3ad5c281dcad90c"
+    },
+    {
+      "path": "assets/chart6_nearmatch4.png",
+      "bytes": 67129,
+      "sha256": "b9c5f4f336163365ea5836ca1793db06b056b85349cc163942c78c8f5ed4c3ba"
+    },
+    {
+      "path": "assets/data/README.md",
+      "bytes": 2553,
+      "sha256": "691998a8f6b6391e7b72bd5894fdcfc00e68680785aa2bab4b5563c0441f50f1"
+    },
+    {
+      "path": "assets/data/equal_pair_counts.csv",
+      "bytes": 1023,
+      "sha256": "e0c09f3259cffda890df8246e598cc198fc984bd696e40fa6ed268c19cdb9969"
+    },
+    {
+      "path": "assets/data/pair_counts.csv",
+      "bytes": 1663,
+      "sha256": "a0c50cd9fab5e9fcfb788964b4f0e7c306acfa2f16b2346255bfe4f51edc9df3"
+    },
+    {
+      "path": "assets/data/site-data.js",
+      "bytes": 40840,
+      "sha256": "e70f7d892c5a9e143728ac7e75aa1b8c2de21832b591e0fddaf1acc473eefb5b"
+    },
+    {
+      "path": "assets/data/DATA_DICTIONARY.md",
+      "bytes": 3152,
+      "sha256": "76a64bbfaa4e1b877f64a3e13fcaf9f893b36f4d2aa46f96584f467d8da2e630"
+    },
+    {
+      "path": "assets/data/equal_vote_probability_summary.md",
+      "bytes": 40991,
+      "sha256": "14418e3474cd16d48934686079b2eb550b9af7e546cfe17428b5d3ba09f8e948"
+    },
+    {
+      "path": "QA_REPORT.md",
+      "bytes": 1735,
+      "sha256": "78e23283f225c318ebb717fb7d7f93f31208023c1170211be2ac7d6e2938f1d7"
+    }
+  ]
+}

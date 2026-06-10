@@ -1,0 +1,13 @@
+{
+  "name": "election-equal-vote-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static explainer site for Korean election equal-vote pair analysis.",
+  "scripts": {
+    "build:data": "python tools/build_site_data.py",
+    "build:integrity": "python tools/build_integrity_manifest.py",
+    "configure:url": "python tools/configure_public_url.py",
+    "check": "python tools/check_site.py",
+    "check:production": "python tools/check_production_url.py"
+  }
+}

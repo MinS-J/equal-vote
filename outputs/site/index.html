@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>후보별 동일득표 분석</title>
+    <meta
+      name="description"
+      content="두 선거구에서 주요 후보 두 명의 득표수가 동시에 같은 현상을 전국 선거 데이터와 시뮬레이션으로 점검한 공개 분석입니다."
+    />
+    <meta name="theme-color" content="#087d75" />
+    <meta property="og:title" content="후보별 동일득표 분석" />
+    <meta
+      property="og:description"
+      content="송도1동·송도2동 사례를 출발점으로 대선·총선·지선 동일득표 현상을 비교범위와 사후탐색 효과로 분리해 설명합니다."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/chart1_scope.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="후보별 동일득표 분석" />
+    <meta
+      name="twitter:description"
+      content="두 선거구에서 두 후보의 표가 동시에 같은 현상을 전국 데이터와 시뮬레이션으로 점검합니다."
+    />
+    <meta name="twitter:image" content="/assets/chart1_scope.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="후보별 동일득표 분석 홈">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>동일득표 분석</span>
+      </a>
+      <nav aria-label="주요 섹션">
+        <a href="#case">사례</a>
+        <a href="#scope">의심 포인트</a>
+        <a href="#regional">지역분석</a>
+        <a href="#history">전국데이터</a>
+        <a href="#simulation">시뮬레이션</a>
+        <a href="#validation">모델검증</a>
+        <a href="#method">기준</a>
+        <a href="#interpretation">해석</a>
+        <a href="#limits">한계</a>
+        <a href="#sources">자료</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-band hero-simple">
+        <div class="hero-copy">
+          <p class="eyebrow">2026 시·도지사 관내사전투표 동일득표 쌍 점검</p>
+          <h1>쌍둥이 득표수 일치, 정말 가능한 확률일까?</h1>
+          <p class="lead">
+            송도1동·송도2동 사례와 광역권 동일득표 쌍을 나눠 보고,
+            어디까지가 드문 현상이고 어디부터가 비교 범위의 효과인지 따져본다.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#findings">핵심 결과</a>
+            <a class="secondary-action" href="#regional">지역별 분석</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="findings" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">결론부터</p>
+          <h2>의심을 줄이거나 키우기 전에 사건 정의부터 고정해야 한다</h2>
+        </div>
+        <div class="finding-grid">
+          <article class="finding">
+            <span class="index">01</span>
+            <h3>특정 숫자와 넓은 사건은 다르다</h3>
+            <p>
+              “하필 3,030표와 1,440표”가 나온 사건과 “어떤 숫자든 두 후보 득표수가
+              각각 같다”는 사건은 확률 계산이 다르다.
+            </p>
+          </article>
+          <article class="finding">
+            <span class="index">02</span>
+            <h3>옆동과 광역권은 서로 다른 의심이다</h3>
+            <p>
+              송도1동·송도2동처럼 가까운 두 곳이 같은 경우와, 특정 광역권 안에서 여러 쌍이
+              생기는 경우는 같은 현상이지만 해석해야 할 범위가 다르다.
+            </p>
+          </article>
+          <article class="finding">
+            <span class="index">03</span>
+            <h3>전라도권 쏠림은 따로 점검해야 한다</h3>
+            <p>
+              광주·전남에 동일득표 쌍이 많이 보이는 것은 단순한 전국 사후탐색 설명만으로
+              끝낼 수 없다. 지역별 관측치와 광역권별 모델 확률을 따로 본다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="case" class="section split">
+        <div>
+          <p class="eyebrow">출발 사례</p>
+          <h2>송도1동과 송도2동의 관내사전투표</h2>
+          <p>
+            두 선거구의 사전투표자 수는 4,548명과 4,540명으로 8명 차이였다.
+            민주당과 국민의힘 득표수가 동시에 같아지려면 이 8명 차이는 기타 후보 쪽에서
+            흡수된다.
+          </p>
+          <p>
+            이 조건을 반영하면, 단순히 “특정 숫자”를 맞히는 문제가 아니라
+            “두 주요 후보의 득표수가 동시에 같아지는 넓은 사건”으로 계산해야 한다.
+          </p>
+        </div>
+        <div class="comparison-table" role="table" aria-label="송도 사례 득표 비교">
+          <div class="row header" role="row">
+            <span role="columnheader">구분</span>
+            <span role="columnheader">송도1동</span>
+            <span role="columnheader">송도2동</span>
+          </div>
+          <div class="row" role="row"><span>선거인수</span><strong>4,548</strong><strong>4,540</strong></div>
+          <div class="row highlight" role="row"><span>민주당</span><strong>3,030</strong><strong>3,030</strong></div>
+          <div class="row highlight" role="row"><span>국민의힘</span><strong>1,440</strong><strong>1,440</strong></div>
+          <div class="row" role="row"><span>기타</span><strong>78</strong><strong>70</strong></div>
+        </div>
+      </section>
+
+      <section id="scope" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">의심 포인트</p>
+          <h2>사람들이 미심쩍어하는 질문은 세 갈래다</h2>
+        </div>
+        <div class="scope-story">
+          <article>
+            <span class="index">01</span>
+            <h3>어떻게 옆동에서 같은 쌍이 생기나?</h3>
+            <p>송도1동·송도2동처럼 이름과 생활권이 가까운 투표구에서 두 후보 득표수가 동시에 같아진 사건이다.</p>
+          </article>
+          <article>
+            <span class="index">02</span>
+            <h3>왜 한 광역권 안에서 여러 쌍이 생기나?</h3>
+            <p>특정 권역 안의 투표구들이 비슷한 정당 득표 구조를 공유하면 같은 득표 조합이 반복될 수 있다.</p>
+          </article>
+          <article>
+            <span class="index">03</span>
+            <h3>왜 전라도권에 많아 보이나?</h3>
+            <p>광주·전남은 정당 득표율이 좁은 범위에 몰리고, 작은 읍면 투표구가 많아 같은 조합이 생길 기회가 있다.</p>
+          </article>
+        </div>
+        <div class="scope-grid" id="scope-grid"></div>
+      </section>
+
+      <section id="regional" class="section section-band compact-band">
+        <div class="section-heading">
+          <p class="eyebrow">지역별 분석</p>
+          <h2>2026년 동일득표 쌍은 어디에 몰려 있었나</h2>
+          <p>
+            2026년 시·도지사 관내사전투표에서 광역권 기준 동일득표 쌍은
+            광주·전남 5쌍, 전북 2쌍, 인천 1쌍으로 관측됐다. 다만 해석은 관측 개수만 보지 않고,
+            모든 광역권에서 1개 이상부터 10개 이상까지 나올 확률을 따로 비교한다.
+          </p>
+        </div>
+        <div class="regional-layout">
+          <article class="regional-card">
+            <h3>관측 분포</h3>
+            <div id="regional-bars" class="region-bars" aria-label="지역별 관측 동일득표 쌍 수"></div>
+            <p>
+              광주·전남이 가장 많지만, 이는 광주와 전남을 하나의 광역권으로 묶은 정의,
+              작은 읍면 단위, 비슷한 후보별 득표율 구조가 함께 만든 결과일 수 있다.
+            </p>
+          </article>
+          <article class="regional-card">
+            <h3>왜 광주·전남이 두드러지나</h3>
+            <ul class="plain-list">
+              <li>지역별 지지율 구조가 다르면 후보별 득표 조합이 몰리는 위치도 달라진다.</li>
+              <li>선거인 수와 투표자 수가 비슷한 투표구가 많으면 같은 조합이 반복될 기회가 생긴다.</li>
+              <li>광주와 전남을 하나로 묶으면 서로 다른 시도의 비교쌍이 추가된다.</li>
+              <li>모델상 전라도권은 다른 권역보다 발생 확률이 높은 편이지만, 광주·전남 5쌍은 여전히 모델 평균보다 높다.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="table-wrap regional-table">
+          <table>
+            <thead>
+              <tr>
+                <th>광역권</th>
+                <th>관측</th>
+                <th>모델 2 평균</th>
+                <th>1개 이상</th>
+                <th>2개 이상</th>
+                <th>3개 이상</th>
+                <th>4개 이상</th>
+                <th>5개 이상</th>
+                <th>6개 이상</th>
+                <th>7개 이상</th>
+                <th>8개 이상</th>
+                <th>9개 이상</th>
+                <th>10개 이상</th>
+                <th>비교 가능 쌍</th>
+              </tr>
+            </thead>
+            <tbody id="regional-probability-body"></tbody>
+          </table>
+        </div>
+        <p class="table-note">
+          확률은 모델 2(Model 2) w=0.7로 50,000회 반복했을 때 각 광역권에서 n개 이상 동일득표 쌍이 나올 비율이다.
+          지역별 지지율, 선거인 규모, 투표구 수가 달라 광역권마다 기준 확률도 크게 달라진다.
+        </p>
+        <div class="question-list regional-details" id="regional-pair-list"></div>
+      </section>
+
+      <section id="history" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">전국데이터</p>
+          <h2>대선·총선·지선에서 같은 기준으로 다시 세었다</h2>
+        </div>
+        <div class="filters" aria-label="집계 필터">
+          <button class="filter is-active" type="button" data-kind="all">전체</button>
+          <button class="filter" type="button" data-kind="대선">대선</button>
+          <button class="filter" type="button" data-kind="총선">총선</button>
+          <button class="filter" type="button" data-kind="지선">지선</button>
+          <button class="filter" type="button" data-vote="사전투표">사전투표</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>데이터셋</th>
+                <th>행 수</th>
+                <th>분할동</th>
+                <th>같은 구시군</th>
+                <th>광역권</th>
+                <th>전국</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+            <!-- Generated by tools/build_site_data.py; JS enhances filtering. -->
+            <tr data-focus="false">
+              <td>대선 14대·본투표</td>
+              <td>3,659</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 15대·본투표</td>
+              <td>3,739</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 16대·본투표</td>
+              <td>3,515</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 17대·본투표</td>
+              <td>3,576</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">1</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 18대·본투표</td>
+              <td>3,479</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 19대·본투표</td>
+              <td>3,491</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">2</span></td>
+              <td><span class="cell-main">2</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 19대·사전투표</td>
+              <td>3,491</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">7</span></td>
+              <td><span class="cell-main">15</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 20대·본투표</td>
+              <td>3,510</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">2</span></td>
+              <td><span class="cell-main">4</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 20대·사전투표</td>
+              <td>3,510</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">2</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 21대·본투표</td>
+              <td>3,554</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">3</span></td>
+              <td><span class="cell-main">6</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>대선 21대·사전투표</td>
+              <td>3,554</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>지선8회(2022)·본투표</td>
+              <td>3,510</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">2</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>지선8회(2022)·사전투표</td>
+              <td>3,510</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">2</span></td>
+              <td><span class="cell-main">5</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>지선9회(2026)·본투표</td>
+              <td>3,558</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">4</span></td>
+              <td><span class="cell-main">7</span></td>
+            </tr>
+            <tr data-focus="true">
+              <td>지선9회(2026)·사전투표</td>
+              <td>3,558</td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">8</span></td>
+              <td><span class="cell-main">10</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 18대·본투표</td>
+              <td>3,542</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 19대·본투표</td>
+              <td>3,535</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">18</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 20대·본투표</td>
+              <td>3,466</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">2</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 20대·사전투표</td>
+              <td>3,466</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">9</span></td>
+              <td><span class="cell-main">24</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 21대·본투표</td>
+              <td>3,484</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">2</span></td>
+              <td><span class="cell-main">2</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 21대·사전투표</td>
+              <td>3,484</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 22대·본투표</td>
+              <td>3,546</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">1</span></td>
+              <td><span class="cell-main">4</span></td>
+            </tr>
+            <tr data-focus="false">
+              <td>총선 22대·사전투표</td>
+              <td>3,546</td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">0</span></td>
+              <td><span class="cell-main">2</span></td>
+              <td><span class="cell-main">4</span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">
+          각 칸은 발견된 <b>동일득표 쌍(pair) 수</b>만 표시한다. 전체 비교 기회 수와 백만 쌍(pair)당 비율은 데이터 사전에 남겼다.
+          이 사이트의 광역권 기본값은 분석 목적상 광주와 전남을 하나의 권역으로 묶은 기준이다.
+        </p>
+      </section>
+
+      <section id="simulation" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">확률 모델</p>
+          <h2>관측 구조를 조건으로 두고, 같은 반복 안에서 결합사건을 세었다</h2>
+          <p>
+            여기서 말하는 확률은 선거 전 예측확률이 아니라, 공개 데이터에서 관측된 지역별
+            구조를 받아들였을 때 같은 패턴이 얼마나 자주 재생성되는지 보는 사후예측(posterior predictive) 평가다.
+          </p>
+        </div>
+
+        <div class="simulation-layout">
+          <div class="simulation-card">
+            <span class="metric-label">결합확률 P(A∩B)</span>
+            <strong>약 1 / 3,400 ~ 1 / 9,100</strong>
+            <p>
+              200,000회 정밀화 기준 모델별 범위다. 기본 해석은 더 보수적인
+              <b>모델 2(Model 2) w=0.7</b>의 약 1 / 9,100을 중심에 둔다.
+            </p>
+          </div>
+          <div class="event-card">
+            <h3>사건 정의</h3>
+            <p><b>A</b>: 분할동 쌍(pair)에서 동일득표쌍이 1개 이상 발견된다.</p>
+            <p><b>B</b>: 광역권 쌍(pair)에서 동일득표쌍이 8개 이상 발견된다.</p>
+            <p>
+              두 결과는 겹치는 비교쌍과 지역별 잠재요인을 공유하므로
+              <code>P(A) * P(B)</code>가 아니라 같은 시뮬레이션 반복에서
+              <code>P(A∩B)</code>를 직접 센다.
+            </p>
+          </div>
+        </div>
+
+        <div class="model-grid">
+          <article>
+            <h3>무엇을 고정했나</h3>
+            <p>
+              선거 종류, 후보 묶음, 행정구역, 비교 범위, 동일득표 정의는 관측 데이터와
+              같은 기준으로 고정했다.
+            </p>
+          </article>
+          <article>
+            <h3>무엇을 확률화했나</h3>
+            <p>
+              각 투표구(분석 행)의 관내사전투표자 수와 후보별 득표율을 다시 생성하고,
+              매 반복마다 동일득표 쌍(pair) 수를 새로 센다.
+            </p>
+          </article>
+          <article>
+            <h3>모델 1(Model 1): 구시군 공통분포</h3>
+            <p>
+              같은 구시군 안에서는 관내사전투표율과 후보별 득표율이 공통 구조를 따른다고
+              두는 기준선 모델이다.
+            </p>
+          </article>
+          <article>
+            <h3>모델 2(Model 2): 축소(shrinkage) 사후예측</h3>
+            <p>
+              투표구별 관측값과 구시군 평균을 가중치 <code>w</code>로 섞는다. 표본이 큰
+              투표구는 좁게, 작은 투표구는 더 넓게 흔들리도록 둔다.
+            </p>
+          </article>
+        </div>
+
+        <div class="assumption-panel">
+          <h3>모델 2에서 사전분포(prior)와 사후예측(posterior predictive)의 의미</h3>
+          <div class="assumption-grid">
+            <div>
+              <span class="metric-label">사전투표율 사전분포(prior)</span>
+              <p>기본 분석은 2026년 해당 투표구의 관내사전투표율과 구시군 평균을 섞는다.</p>
+            </div>
+            <div>
+              <span class="metric-label">후보별 득표율 사전분포(prior)</span>
+              <p>2026년 해당 투표구의 후보별 득표율과 구시군 후보별 평균을 섞는다.</p>
+            </div>
+            <div>
+              <span class="metric-label">민감도 분석</span>
+              <p>사전투표율 사전분포를 2022년 같은 읍면동 정보로 바꿔도 방향이 크게 달라지는지 확인한다.</p>
+            </div>
+            <div>
+              <span class="metric-label">사용 이유</span>
+              <p>지역별 정치 성향과 투표 참여 구조를 완전히 지우지 않고, 관측 구조 안에서 재현성을 묻기 위해서다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-strip" aria-label="200,000회 결합사건 결과">
+          <div><span>모델 1</span><strong>0.0295%</strong><small>약 1 / 3,400</small></div>
+          <div><span>모델 2 w=0.7</span><strong>0.0110%</strong><small>약 1 / 9,100</small></div>
+          <div><span>모델 2 w=0.9</span><strong>0.0205%</strong><small>약 1 / 4,900</small></div>
+        </div>
+      </section>
+
+      <section id="method" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">분석 기준</p>
+          <h2>공개 논쟁에서 섞이기 쉬운 기준을 분리했다</h2>
+        </div>
+        <div class="method-grid">
+          <article>
+            <h3>엄격한(strict) 동일득표</h3>
+            <p>민주계열 후보 득표수와 보수계열 후보 득표수가 둘 다 같은 쌍(pair)만 센다. 한쪽 정당 득표가 0인 경우를 포함한 완화(loose) 집계는 참고값으로만 둔다.</p>
+          </article>
+          <article>
+            <h3>분할동 쌍(pair)</h3>
+            <p>읍면동명에서 숫자 표현을 제거했을 때 같은 이름이 되는 분할동 기준이다. 송도1동·송도2동 같은 사례를 가장 좁게 근사한다.</p>
+          </article>
+          <article>
+            <h3>사후탐색 효과</h3>
+            <p>하나의 쌍(pair)을 미리 지정한 확률과 전국의 많은 쌍을 훑은 뒤 발견하는 확률은 다르다. 표는 발견 쌍 수를 먼저 보여주고, 비교 기회 수는 데이터 사전에 둔다.</p>
+          </article>
+          <article>
+            <h3>결합사건</h3>
+            <p>유사 분할동 결과와 광역권 결과는 겹치는 비교쌍과 같은 지역별 잠재요인을 공유한다. 두 사건을 독립 증거처럼 단순 곱하지 않고, 같은 반복 안에서 함께 세었다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="interpretation" class="section section-band compact-band">
+        <div class="section-heading">
+          <p class="eyebrow">해석 원칙</p>
+          <h2>놀라운 관측과 부정의 증거는 같은 말이 아니다</h2>
+        </div>
+        <div class="interpretation-grid">
+          <article>
+            <span class="index">A</span>
+            <h3>이 분석이 말하는 것</h3>
+            <p>
+              동일득표 쌍은 실제 전국 데이터에서 관찰되는 현상이며, 비교 범위와 사후탐색
+              여부를 반영하면 “상상할 수 없는 확률”로 단정하기 어렵다.
+            </p>
+          </article>
+          <article>
+            <span class="index">B</span>
+            <h3>이 분석이 말하지 않는 것</h3>
+            <p>
+              이 결과만으로 특정 선거가 정상 또는 비정상이라고 판정하지 않는다. 개표
+              절차, 원자료 진위, 행정 실수 가능성은 별도의 증거와 검증이 필요하다.
+            </p>
+          </article>
+          <article>
+            <span class="index">C</span>
+            <h3>공개 검증의 출발점</h3>
+            <p>
+              의혹을 억누르기보다, 같은 사건 정의와 같은 데이터로 누구나 다시 세어볼 수
+              있게 만드는 것이 이 사이트의 목적이다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">확인 질문</p>
+          <h2>토론 전에 먼저 맞춰야 할 질문들</h2>
+        </div>
+        <div class="question-list">
+          <details open>
+            <summary>비교한 사건은 특정 숫자인가, “어떤 숫자든 동시 일치”인가?</summary>
+            <p>특정 숫자까지 고정하면 확률은 작아진다. 그러나 실제 사람들이 놀라는 사건은 두 후보의 득표수가 각각 같다는 넓은 사건에 더 가깝다.</p>
+          </details>
+          <details>
+            <summary>pair는 사전에 하나를 정했나, 여러 pair를 훑은 뒤 찾았나?</summary>
+            <p>전국의 수십만 pair를 훑으면 하나 이상의 일치가 나타날 기회가 크게 늘어난다. 이 차이를 빼면 확률이 과장될 수 있다.</p>
+          </details>
+          <details>
+            <summary>두 사건을 독립 증거처럼 곱해도 되는가?</summary>
+            <p>그대로 곱하면 독립 가정이 과해질 수 있다. 유사 분할동을 제외한 나머지 광역권만 따로 보면 다른 질문이 되며, 이 사이트는 중복을 피하기 위해 결합사건을 같은 반복 안에서 계산한다.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="validation" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">모델 검증</p>
+          <h2>모델 검증: 근접 일치는 맞는데, 정확 일치는 높다</h2>
+          <p>
+            모델 2(Model 2) w=0.7로 ±1, ±2, ±3표 이내의 근접 일치까지 보면
+            실제 관측은 예측 구간에 대체로 들어온다. 반면 ±0, 즉 정확히 같은 쌍은
+            예측 평균보다 높다.
+          </p>
+        </div>
+        <div class="validation-layout">
+          <figure class="chart-frame">
+            <img src="./assets/chart6_nearmatch4.png" alt="정확 일치와 ±1, ±2, ±3표 근접 일치의 실제 관측과 모델 예측 비교" />
+            <figcaption>
+              ±1표 이상 근접 일치는 모델 예측과 대체로 맞지만, 정확 일치(±0)는 예측보다 높게 관측된다.
+            </figcaption>
+          </figure>
+          <article class="validation-card">
+            <h3>검증 수치</h3>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>기준</th>
+                    <th>실제</th>
+                    <th>시뮬레이션 평균</th>
+                    <th>95% 구간</th>
+                  </tr>
+                </thead>
+                <tbody id="near-match-body"></tbody>
+              </table>
+            </div>
+            <p>
+              따라서 모델이 전체 득표 분포를 완전히 못 맞춘다기보다, 정확 일치 지점에
+              추가 설명이 필요한 신호가 있다고 보는 편이 더 정확하다. 이 신호만으로 원인을
+              단정하지는 않는다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="limits" class="section section-band compact-band">
+        <div class="section-heading">
+          <p class="eyebrow">한계</p>
+          <h2>이 분석은 희귀성과 재현성을 평가할 뿐, 원인을 단정하지 않는다</h2>
+        </div>
+        <div class="limit-grid">
+          <article>
+            <h3>지표의 한계</h3>
+            <p>동일득표 pair는 이상징후를 살펴보는 지표이지, 원인이나 부정의 직접 증거가 아니다.</p>
+          </article>
+          <article>
+            <h3>모델의 한계</h3>
+            <p>시뮬레이션 결과는 사전분포(prior), 축소(shrinkage) 가중치, 비교 범위 같은 가정에 의존한다.</p>
+          </article>
+          <article>
+            <h3>자료의 한계</h3>
+            <p>공개 개표자료의 집계 단위를 사용하므로 개별 투표 행위나 현장 절차를 직접 분석하지 않는다.</p>
+          </article>
+          <article>
+            <h3>현실 반영의 한계</h3>
+            <p>지역 인구 구조 변동, 신도시·농어촌 구성 차이, 선거구 개편, 후보 구도 변화는 모델 안에 완전히 담기 어렵다.</p>
+          </article>
+          <article>
+            <h3>해석의 한계</h3>
+            <p>결론은 “관측된 패턴이 모델 안에서 얼마나 재현되는가”에 제한되며, 법적·인과적 판단으로 확장하지 않는다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="sources" class="section sources">
+        <div>
+          <p class="eyebrow">자료와 재현성</p>
+          <h2>원본, 정규화, 집계, 시뮬레이션을 분리했다</h2>
+          <p>
+            원본 파일은 중앙선거관리위원회 개표자료이며, 분석용 데이터는 같은 스크립트로
+            다시 생성할 수 있다. 사이트의 수치는 재생성된 `equal_pair_counts.csv`와
+            `pair_counts.csv`의 값을 기준으로 했다.
+          </p>
+        </div>
+        <div class="source-list">
+          <a href="./docs.html?file=guide">재현 가이드</a>
+          <a href="./assets/data/equal_pair_counts.csv">동일득표 집계 CSV</a>
+          <a href="./assets/data/pair_counts.csv">비교 쌍(pair) 수 CSV</a>
+          <a href="./docs.html?file=dictionary">데이터 사전</a>
+          <a href="./assets/data/integrity-manifest.json">무결성 매니페스트</a>
+          <a href="./docs.html?file=summary">분석 요약 원문</a>
+          <a href="./docs.html?file=qa">사이트 QA 기록</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>후보별 동일득표 분석</span>
+      <span>마지막 정리: 2026-06-10</span>
+    </footer>
+
+    <script src="./assets/data/site-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

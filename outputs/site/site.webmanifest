@@ -1,0 +1,10 @@
+{
+  "name": "후보별 동일득표 분석",
+  "short_name": "동일득표 분석",
+  "description": "후보별 득표수 동시 일치 현상을 전국 선거 데이터와 시뮬레이션으로 점검한 공개 분석 사이트입니다.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfcfb",
+  "theme_color": "#087d75",
+  "lang": "ko"
+}
