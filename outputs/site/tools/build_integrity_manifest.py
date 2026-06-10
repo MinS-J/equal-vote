@@ -15,7 +15,7 @@ INCLUDED_FILES = [
     "app.js",
     "docs.js",
     "assets/chart1_scope.png",
-    "assets/chart6_nearmatch4.png",
+    "assets/chart2_calibration.png",
     "assets/data/README.md",
     "assets/data/equal_pair_counts.csv",
     "assets/data/pair_counts.csv",

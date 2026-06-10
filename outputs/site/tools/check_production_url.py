@@ -12,7 +12,7 @@ REQUIRED_PATHS = [
     "/styles.css",
     "/app.js",
     "/assets/chart1_scope.png",
-    "/assets/chart6_nearmatch4.png",
+    "/assets/chart2_calibration.png",
     "/assets/data/site-data.js",
     "/assets/data/equal_pair_counts.csv",
     "/assets/data/pair_counts.csv",
@@ -93,7 +93,7 @@ REQUIRED_MANIFEST_MARKERS = [
     '"path": "docs.js"',
     '"path": "assets/data/README.md"',
     '"path": "assets/chart1_scope.png"',
-    '"path": "assets/chart6_nearmatch4.png"',
+    '"path": "assets/chart2_calibration.png"',
 ]
 
 
