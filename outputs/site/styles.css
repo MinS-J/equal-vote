@@ -260,8 +260,12 @@ figcaption {
 }
 
 .section-heading {
-  max-width: 820px;
+  max-width: 1060px;
   margin-bottom: 32px;
+}
+
+.section-heading > p:not(.eyebrow) {
+  max-width: 860px;
 }
 
 .finding-grid,
