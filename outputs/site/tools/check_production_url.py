@@ -18,7 +18,6 @@ REQUIRED_PATHS = [
     "/assets/data/pair_counts.csv",
     "/assets/data/DATA_DICTIONARY.md",
     "/assets/data/README.md",
-    "/assets/data/equal_vote_probability_summary.md",
     "/QA_REPORT.md",
     "/assets/data/integrity-manifest.json",
     "/robots.txt",
@@ -67,7 +66,6 @@ REQUIRED_DOC_JS_MARKERS = [
     "DOCS",
     "./assets/data/README.md",
     "./assets/data/DATA_DICTIONARY.md",
-    "./assets/data/equal_vote_probability_summary.md",
     "renderMarkdown",
 ]
 

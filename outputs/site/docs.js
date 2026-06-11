@@ -7,10 +7,6 @@ const DOCS = {
     title: "데이터 사전",
     path: "./assets/data/DATA_DICTIONARY.md",
   },
-  summary: {
-    title: "분석 요약 원문",
-    path: "./assets/data/equal_vote_probability_summary.md",
-  },
   qa: {
     title: "사이트 QA 기록",
     path: "./QA_REPORT.md",

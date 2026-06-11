@@ -21,7 +21,6 @@ INCLUDED_FILES = [
     "assets/data/pair_counts.csv",
     "assets/data/site-data.js",
     "assets/data/DATA_DICTIONARY.md",
-    "assets/data/equal_vote_probability_summary.md",
     "QA_REPORT.md",
 ]
 

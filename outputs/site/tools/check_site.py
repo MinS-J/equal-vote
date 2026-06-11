@@ -192,7 +192,6 @@ def check_site_data() -> None:
         "docs.js",
         "재현 가이드",
         "데이터 사전",
-        "분석 요약 원문",
         "사이트 QA 기록",
         "/_vercel/insights/script.js",
         "window.va",
@@ -205,7 +204,6 @@ def check_site_data() -> None:
         "DOCS",
         "./assets/data/README.md",
         "./assets/data/DATA_DICTIONARY.md",
-        "./assets/data/equal_vote_probability_summary.md",
         "./QA_REPORT.md",
         "renderMarkdown",
     ]
@@ -215,6 +213,8 @@ def check_site_data() -> None:
 
     guide_required = [
         "Public Reproducibility Package",
+        "경계 인접 분석",
+        "simulate_joint_adjacent_events.py",
         "https://github.com/MinS-J/equal-vote",
         "equal-vote-precomputed.zip",
     ]
