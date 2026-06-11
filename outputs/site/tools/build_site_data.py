@@ -341,8 +341,12 @@ def joint_model_label(config: dict) -> str:
 
 
 def load_joint_probabilities() -> dict:
-    def load_rows(pattern: str, narrow_scope: str, event_label: str) -> tuple[dict, list[dict]]:
-        candidates = list(ANALYSIS_RESULTS_DIR.glob(pattern))
+    def load_rows(patterns: str | list[str], narrow_scope: str, event_label: str) -> tuple[dict, list[dict]]:
+        if isinstance(patterns, str):
+            patterns = [patterns]
+        candidates = []
+        for pattern in patterns:
+            candidates.extend(ANALYSIS_RESULTS_DIR.glob(pattern))
         selected: dict[str, tuple[Path, dict]] = {}
         for path in candidates:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -392,18 +396,32 @@ def load_joint_probabilities() -> dict:
         return first, rows
 
     first, rows = load_rows(
-        (
-            "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1"
-            "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
-        ),
+        [
+            "joint_2026_governor_advance_Astem1_Bgjjn8_*_current_*.json",
+            (
+                "joint_2026_governor_advance_A-same_eupmyeondong_stem-ge1"
+                "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+            ),
+            (
+                "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1"
+                "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+            ),
+        ],
         "분할동",
         "분할동 1쌍 이상",
     )
     adjacent_first, adjacent_rows = load_rows(
-        (
-            "joint_adjacent_2026_시·도지사_advance_A-edge_adjacent_same_sigungu-ge1"
-            "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
-        ),
+        [
+            "joint_adjacent_2026_governor_advance_Aedge1_Bgjjn8_*_current_*.json",
+            (
+                "joint_adjacent_2026_governor_advance_A-edge_adjacent_same_sigungu-ge1"
+                "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+            ),
+            (
+                "joint_adjacent_2026_시·도지사_advance_A-edge_adjacent_same_sigungu-ge1"
+                "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+            ),
+        ],
         "경계 인접",
         "경계 인접 1쌍 이상",
     )

@@ -30,10 +30,10 @@
 
 ## Rebuild Commands
 
-아래 명령은 `work/` 코드 폴더에서 실행한다.
+아래 명령은 `equal-vote-code.zip`과 `equal-vote-inputs.zip`을 같은 폴더에 푼 뒤, 그 최상위 폴더에서 `work/` 코드 폴더로 이동해 실행한다.
 
 ```powershell
-cd C:\Users\minse\Documents\Codex\2026-06-10\goal-1\work\work
+cd .\work
 python -m compileall .
 python run_pipeline.py --stage convert
 python run_pipeline.py --stage detect

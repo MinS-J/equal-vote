@@ -8,6 +8,7 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
+from file_names import sheet_slug
 from paths import DATA_DIR, RESULTS_DIR
 
 
@@ -371,11 +372,11 @@ def main():
         result["data"]["previous_turnout_unmatched_rows"] = row_params.get("previous_turnout_unmatched_count", 0)
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    sheet_part = sheet_slug(args.sheet)
+    n_part = "random" if args.randomize_n else "fixed"
     out = RESULTS_DIR / (
-        f"simulation_{args.dataset}_{args.sheet}_{args.rows}_pair-{args.pair_scope}"
-        f"_model-{args.prob_model}-{args.model_scope}_n-{'random' if args.randomize_n else 'fixed'}"
-        f"_k{args.kappa:g}_t{args.tau:g}_qw{args.q_prior_weight:g}_pw{args.p_prior_weight:g}"
-        f"_turnout-{args.turnout_prior}_{args.iters}.json"
+        f"simulation_{args.dataset}_{sheet_part}_{args.rows}_{args.pair_scope}"
+        f"_{args.prob_model}_{args.model_scope}_n{n_part}_{args.iters}.json"
     )
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))

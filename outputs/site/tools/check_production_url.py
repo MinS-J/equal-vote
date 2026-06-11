@@ -77,7 +77,7 @@ REQUIRED_DATA_MARKERS = [
     '"jointProbabilities"',
     '"adjacentModels"',
     '"narrowScope": "경계 인접"',
-    '"possiblePairsA": 6659',
+    '"possiblePairsA": 6656',
     '"pABText": "0.225%"',
     '"pAText": "0.587%"',
     '"pBText": "0.825%"',
@@ -93,6 +93,12 @@ REQUIRED_DATA_MARKERS = [
     '"value": "8"',
     '"value": "10"',
     '"ratesPerMillion"',
+]
+
+REQUIRED_GUIDE_MARKERS = [
+    "경계 인접 분석",
+    "simulate_joint_adjacent_events.py",
+    "cd .\\work",
 ]
 
 REQUIRED_MANIFEST_MARKERS = [
@@ -176,6 +182,7 @@ def main() -> None:
     )
     require_text_markers(responses["/docs.html"][1], REQUIRED_DOC_MARKERS, "docs.html")
     require_text_markers(responses["/docs.js"][1], REQUIRED_DOC_JS_MARKERS, "docs.js")
+    require_text_markers(responses["/assets/data/README.md"][1], REQUIRED_GUIDE_MARKERS, "README.md")
     require_text_markers(responses["/assets/data/site-data.js"][1], REQUIRED_DATA_MARKERS, "site-data.js")
     require_text_markers(
         responses["/assets/data/integrity-manifest.json"][1],

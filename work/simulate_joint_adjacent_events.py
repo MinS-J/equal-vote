@@ -22,6 +22,7 @@ from analyze_geo_adjacent_observed import (
     matched_pairs_for_dataset,
     parse_boundary_zip,
 )
+from file_names import sheet_slug
 from paths import INPUTS_DIR, RESULTS_DIR
 from simulate_adjacent_pairs import (
     build_adjacent_shape_pairs,
@@ -444,13 +445,13 @@ def main() -> None:
         result = run(args, boundary)
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    sheet_part = sheet_slug(args.sheet)
     out = RESULTS_DIR / (
-        f"joint_adjacent_{args.dataset}_{args.sheet}_{args.rows}"
-        f"_A-edge_adjacent_same_sigungu-ge{result['events']['A'].rsplit('>= ', 1)[-1]}"
-        f"_B-{args.scope_b}-ge{args.threshold_b}"
-        f"_model-{args.prob_model}-{args.model_scope}"
+        f"joint_adjacent_{args.dataset}_{sheet_part}_{args.rows}"
+        f"_Aedge{result['events']['A'].rsplit('>= ', 1)[-1]}_Bgjjn{args.threshold_b}"
+        f"_{args.prob_model}_{args.model_scope}"
         f"_qw{args.q_prior_weight:g}_pw{args.p_prior_weight:g}"
-        f"_turnout-{args.turnout_prior}_{args.iters}.json"
+        f"_{args.turnout_prior}_{args.iters}.json"
     )
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))

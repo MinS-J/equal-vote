@@ -1,6 +1,6 @@
 """Joint probability of two equal-vote-pair events within one simulation.
 
-md outputs/equal_vote_probability_summary.md 13-2 단계 구현.
+분할동 기준 사건과 광역권 사건을 같은 반복 안에서 직접 세는 구현.
 
 기존 simulate_equal_candidate_pairs.py 는 한 번의 실행에서 하나의 pair scope 만
 카운트한다. 반면 다음 두 사건은 서로 독립이 아니다.
@@ -23,6 +23,7 @@ import json
 import numpy as np
 import pandas as pd
 
+from file_names import sheet_slug
 from simulate_equal_candidate_pairs import (
     DATA_DIR,
     RESULTS_DIR,
@@ -239,12 +240,13 @@ def main():
         result["data"]["previous_turnout_unmatched_rows"] = row_params.get("previous_turnout_unmatched_count", 0)
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    sheet_part = sheet_slug(args.sheet)
     out = RESULTS_DIR / (
-        f"joint_{args.dataset}_{args.sheet}_{args.rows}"
-        f"_A-{args.scope_a}-ge{args.threshold_a}_B-{args.scope_b}-ge{args.threshold_b}"
-        f"_model-{args.prob_model}-{args.model_scope}"
+        f"joint_{args.dataset}_{sheet_part}_{args.rows}"
+        f"_Astem{args.threshold_a}_Bgjjn{args.threshold_b}"
+        f"_{args.prob_model}_{args.model_scope}"
         f"_qw{args.q_prior_weight:g}_pw{args.p_prior_weight:g}"
-        f"_turnout-{args.turnout_prior}_{args.iters}.json"
+        f"_{args.turnout_prior}_{args.iters}.json"
     )
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))

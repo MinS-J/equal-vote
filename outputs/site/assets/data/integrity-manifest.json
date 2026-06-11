@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 43080,
-      "sha256": "7caf295dc0205e99ddc771385d50915cc0c99b0602733f1c38a65128a49ea466"
+      "bytes": 43087,
+      "sha256": "bea2b7ed5e5f6c94c535911765fd4d609a5152c5e6039a924e3afd38f42aa381"
     },
     {
       "path": "docs.html",
@@ -39,8 +39,8 @@
     },
     {
       "path": "assets/data/README.md",
-      "bytes": 5185,
-      "sha256": "95c2dd17ae58822527eb448d00878dde04e8198924664c361a36c8a3ba126a98"
+      "bytes": 5245,
+      "sha256": "e60c63d683e6d7f6f81a0c82e77ff0c131d3c8a6e6852597061944f401c554fe"
     },
     {
       "path": "assets/data/equal_pair_counts.csv",
@@ -54,8 +54,8 @@
     },
     {
       "path": "assets/data/site-data.js",
-      "bytes": 65460,
-      "sha256": "c4ebc7dd69462a3d73496c9a68f34ee1b0731839b5f8fd8a1a0d7553a33c4b79"
+      "bytes": 65025,
+      "sha256": "1fb8fff26b658dbd619fd205fa5dad006b14201c9eb812b95fee29f6d181eac6"
     },
     {
       "path": "assets/data/DATA_DICTIONARY.md",

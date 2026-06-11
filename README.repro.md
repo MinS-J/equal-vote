@@ -8,6 +8,7 @@
   - `대선/`
   - `총선/`
   - `지방선거/`
+  - `sgis/`: 경계 인접 분석에 쓰는 SGIS 읍면동 경계 ZIP
 - `work/`: Python 코드, 중간 데이터, 시뮬레이션 결과
   - `work/data/`: 정규화된 `.pkl`/`.csv`와 동일득표 집계
   - `work/results/`: 시뮬레이션 JSON 결과
@@ -29,7 +30,7 @@
 
 ## Rebuild Commands
 
-아래 명령은 `work/` 코드 폴더에서 실행한다.
+아래 명령은 `equal-vote-code.zip`과 `equal-vote-inputs.zip`을 같은 폴더에 푼 뒤, 그 최상위 폴더에서 `work/` 코드 폴더로 이동해 실행한다.
 
 ```powershell
 cd work
@@ -71,3 +72,30 @@ python simulate_joint_events.py --dataset 2026 --sheet 시·도지사 --rows adv
 ```
 
 정밀 시뮬레이션은 시간이 오래 걸리므로 기본 파이프라인에는 포함하지 않는다.
+
+## 경계 인접 분석
+
+경계 인접 분석은 이름이 비슷한 분할동 기준과 별도로, SGIS 읍면동 경계에서 실제 경계선을 공유하는 같은 시군구 안의 쌍(pair)을 비교한다. 기본 재현은 API 호출이 아니라 `inputs/sgis/`에 들어 있는 `bnd_dong_00_*_4Q.zip` 또는 `bnd_dong_00_*_2Q.zip` 파일을 읽는 방식이다.
+
+먼저 각 선거연도에 가장 가까운 SGIS 경계 기준을 붙여 관측 집계를 만든다.
+
+```powershell
+python analyze_geo_adjacent_observed.py --boundary-source dong-zip --sgis-dir ..\inputs\sgis --boundary-mode matched-year
+```
+
+이 명령은 `work/results/geo_adjacent_observed_counts_dong_zip_matched_year.csv`와 `work/results/geo_adjacent_observed_details_dong_zip_matched_year.csv`를 만든다. 사이트의 전국 데이터 표에서 보이는 `경계 인접` 값은 이 결과를 바탕으로 한다.
+
+확률 모델 섹션의 `경계 인접 1쌍 이상`과 `광역권 8쌍 이상` 결합확률은 아래 명령으로 재생성한다. 기본 해석값은 모델 2, `w=0.7`이다.
+
+```powershell
+python simulate_joint_adjacent_events.py --dataset 2026 --sheet 시·도지사 --rows advance --prob-model row_shrink --q-prior-weight 0.7 --p-prior-weight 0.7 --iters 200000 --batch-size 2000
+```
+
+민감도 비교에 쓴 다른 모델은 같은 명령에서 모델 옵션만 바꿔 실행한다.
+
+```powershell
+python simulate_joint_adjacent_events.py --dataset 2026 --sheet 시·도지사 --rows advance --prob-model group --iters 200000 --batch-size 2000
+python simulate_joint_adjacent_events.py --dataset 2026 --sheet 시·도지사 --rows advance --prob-model row_shrink --q-prior-weight 0.9 --p-prior-weight 0.9 --iters 200000 --batch-size 2000
+```
+
+경계 매칭 결과는 `work/results/edge_adjacent_pairs_2026_advance_2025_2Q.json`에 캐시된다. SGIS ZIP을 교체했거나 매칭 기준을 바꾼 뒤에는 `--refresh-pair-cache`를 붙여 캐시를 다시 만든다.
