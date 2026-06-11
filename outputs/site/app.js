@@ -107,33 +107,36 @@ if (nearMatchBody) {
 }
 
 if (jointSummary && data.jointProbabilities?.models?.length) {
-  const base = data.jointProbabilities.models.find((item) => item.label.includes("w=0.7"));
-  const first = data.jointProbabilities.models[0];
-  const focus = base || first;
-  const minInverse = data.jointProbabilities.models
-    .map((item) => item.pAB)
-    .filter(Boolean)
-    .sort((a, b) => b - a)[0];
-  const maxInverse = data.jointProbabilities.models
-    .map((item) => item.pAB)
-    .filter(Boolean)
-    .sort((a, b) => a - b)[0];
+  const stemModels = data.jointProbabilities.models || [];
+  const adjacentModels = data.jointProbabilities.adjacentModels || [];
   const inverseText = (value) => (value ? `1 / ${Math.round(1 / value).toLocaleString("ko-KR")}` : "-");
+  const rangeText = (items) => {
+    const values = items.map((item) => item.pAB).filter(Boolean).sort((a, b) => b - a);
+    if (!values.length) return "-";
+    return `${inverseText(values[0])} ~ ${inverseText(values[values.length - 1])}`;
+  };
+  const stemFocus = stemModels.find((item) => item.label.includes("w=0.7")) || stemModels[0];
+  const adjacentFocus = adjacentModels.find((item) => item.label.includes("w=0.7")) || adjacentModels[0];
   jointSummary.innerHTML = `
     <span class="metric-label">결합확률 P(A∩B)</span>
-    <strong>약 ${inverseText(minInverse)} ~ ${inverseText(maxInverse)}</strong>
+    <strong>분할동 약 ${rangeText(stemModels)}</strong>
     <p>
       200,000회 정밀화 기준 모델별 범위다. 기본 해석은 더 보수적인
-      <b>${focus.label}</b>의 <b>${focus.pABInverseText}</b>을 중심에 둔다.
+      <b>${stemFocus.label}</b>의 <b>${stemFocus.pABInverseText}</b>을 중심에 둔다.
+      경계 인접 기준은 ${adjacentModels.length ? `<b>${rangeText(adjacentModels)}</b>, ${adjacentFocus.label} 기준 <b>${adjacentFocus.pABInverseText}</b>` : "계산 중"}이다.
     </p>
   `;
 }
 
 if (jointProbabilityBody && data.jointProbabilities?.models?.length) {
-  jointProbabilityBody.innerHTML = data.jointProbabilities.models
+  const jointRows = data.jointProbabilities.allModels?.length
+    ? data.jointProbabilities.allModels
+    : data.jointProbabilities.models;
+  jointProbabilityBody.innerHTML = jointRows
     .map(
       (item) => `
         <tr>
+          <td>${item.narrowScope || "분할동"}</td>
           <td>${item.label}</td>
           <td>${item.pAText}</td>
           <td>${item.pBText}</td>

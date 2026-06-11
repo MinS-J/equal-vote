@@ -341,63 +341,84 @@ def joint_model_label(config: dict) -> str:
 
 
 def load_joint_probabilities() -> dict:
-    candidates = list(
-        ANALYSIS_RESULTS_DIR.glob(
+    def load_rows(pattern: str, narrow_scope: str, event_label: str) -> tuple[dict, list[dict]]:
+        candidates = list(ANALYSIS_RESULTS_DIR.glob(pattern))
+        selected: dict[str, tuple[Path, dict]] = {}
+        for path in candidates:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            config = payload.get("config", {})
+            key = (
+                "model1"
+                if config.get("prob_model") == "group"
+                else f"model2-w{config.get('q_prior_weight')}"
+            )
+            iters = payload.get("joint", {}).get("iterations", 0)
+            previous = selected.get(key)
+            if previous is None or iters > previous[1].get("joint", {}).get("iterations", 0):
+                selected[key] = (path, payload)
+
+        order = {"model1": 0, "model2-w0.7": 1, "model2-w0.9": 2}
+        rows = []
+        for key, (path, payload) in sorted(selected.items(), key=lambda item: order.get(item[0], 99)):
+            joint = payload.get("joint", {})
+            config = payload.get("config", {})
+            p_a = joint.get("P_A")
+            p_b = joint.get("P_B")
+            p_ab = joint.get("P_A_and_B")
+            p_b_given_a = joint.get("P_B_given_A")
+            rows.append(
+                {
+                    "narrowScope": narrow_scope,
+                    "eventLabel": event_label,
+                    "label": joint_model_label(config),
+                    "iterations": joint.get("iterations"),
+                    "source": path.name,
+                    "pA": p_a,
+                    "pB": p_b,
+                    "pAB": p_ab,
+                    "pBGivenA": p_b_given_a,
+                    "pAText": format_percent_precise(p_a),
+                    "pBText": format_percent_precise(p_b),
+                    "pABText": format_percent_precise(p_ab),
+                    "pBGivenAText": format_percent_precise(p_b_given_a),
+                    "pABInverseText": format_inverse(p_ab),
+                    "successA": joint.get("success_count_A"),
+                    "successB": joint.get("success_count_B"),
+                    "successAB": joint.get("success_count_A_and_B"),
+                    "possiblePairsA": payload.get("data", {}).get("scope_a_possible_pairs"),
+                }
+            )
+        first = next(iter(selected.values()))[1] if selected else {}
+        return first, rows
+
+    first, rows = load_rows(
+        (
             "joint_2026_시·도지사_advance_A-same_eupmyeondong_stem-ge1"
             "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
-        )
+        ),
+        "분할동",
+        "분할동 1쌍 이상",
     )
-    if not candidates:
-        return {"events": {}, "models": []}
+    adjacent_first, adjacent_rows = load_rows(
+        (
+            "joint_adjacent_2026_시·도지사_advance_A-edge_adjacent_same_sigungu-ge1"
+            "_B-same_sido_gwangju_jeonnam-ge8_*_turnout-current_*.json"
+        ),
+        "경계 인접",
+        "경계 인접 1쌍 이상",
+    )
 
-    selected: dict[str, tuple[Path, dict]] = {}
-    for path in candidates:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        config = payload.get("config", {})
-        key = (
-            "model1"
-            if config.get("prob_model") == "group"
-            else f"model2-w{config.get('q_prior_weight')}"
-        )
-        iters = payload.get("joint", {}).get("iterations", 0)
-        previous = selected.get(key)
-        if previous is None or iters > previous[1].get("joint", {}).get("iterations", 0):
-            selected[key] = (path, payload)
+    if not rows and not adjacent_rows:
+        return {"events": {}, "models": [], "adjacentModels": [], "allModels": []}
 
-    order = {"model1": 0, "model2-w0.7": 1, "model2-w0.9": 2}
-    rows = []
-    for key, (path, payload) in sorted(selected.items(), key=lambda item: order.get(item[0], 99)):
-        joint = payload.get("joint", {})
-        config = payload.get("config", {})
-        p_a = joint.get("P_A")
-        p_b = joint.get("P_B")
-        p_ab = joint.get("P_A_and_B")
-        p_b_given_a = joint.get("P_B_given_A")
-        rows.append(
-            {
-                "label": joint_model_label(config),
-                "iterations": joint.get("iterations"),
-                "source": path.name,
-                "pA": p_a,
-                "pB": p_b,
-                "pAB": p_ab,
-                "pBGivenA": p_b_given_a,
-                "pAText": format_percent_precise(p_a),
-                "pBText": format_percent_precise(p_b),
-                "pABText": format_percent_precise(p_ab),
-                "pBGivenAText": format_percent_precise(p_b_given_a),
-                "pABInverseText": format_inverse(p_ab),
-                "successA": joint.get("success_count_A"),
-                "successB": joint.get("success_count_B"),
-                "successAB": joint.get("success_count_A_and_B"),
-            }
-        )
-
-    first = next(iter(selected.values()))[1] if selected else {}
     return {
         "events": first.get("events", {}),
         "observed": first.get("observed", {}),
         "models": rows,
+        "adjacentEvents": adjacent_first.get("events", {}),
+        "adjacentObserved": adjacent_first.get("observed", {}),
+        "adjacentModels": adjacent_rows,
+        "allModels": rows + adjacent_rows,
     }
 
 
