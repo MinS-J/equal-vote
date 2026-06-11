@@ -100,6 +100,7 @@ def render_history_rows(history: list[dict], focus_dataset: str) -> str:
                     f"              <td>{dataset}</td>",
                     f"              <td>{format_int(row['rows'])}</td>",
                     metric_cell(row, "stem"),
+                    metric_cell(row, "edgeAdjacent"),
                     metric_cell(row, "sameSigungu"),
                     metric_cell(row, "gwangjuJeonnam"),
                     metric_cell(row, "national"),
@@ -235,12 +236,30 @@ def load_geo_adjacent_observed() -> dict:
             "source": "",
             "summary": {},
             "focus": {},
+            "datasets": [],
             "byKind": [],
             "details": [],
         }
 
     rows = read_csv_path(counts_path)
     details_rows = read_csv_path(details_path) if details_path.exists() else []
+    datasets = [
+        {
+            "dataset": compact_dataset_name(row["dataset"]),
+            "kind": row["kind"],
+            "boundary": f"{row['boundary_year']}년 {row['boundary_quarter']}",
+            "boundarySource": row["boundary_source"],
+            "rows": to_int(row["rows"]),
+            "matchedRows": to_int(row["matched_rows"]),
+            "matchRate": to_float(row["match_rate"]),
+            "edgeAdjacentPairs": to_int(row["edge_pairs_same_sigungu"]),
+            "edgeAdjacent": to_int(row["equal_edge_same_sigungu"]),
+            "edgeAdjacentPairsAll": to_int(row["edge_pairs_all"]),
+            "edgeAdjacentAll": to_int(row["equal_edge_all"]),
+            "boundaryFile": Path(row["boundary_file"]).name,
+        }
+        for row in rows
+    ]
     kind_order = ["대선", "총선", "지선"]
     by_kind = []
     for kind in kind_order:
@@ -306,6 +325,7 @@ def load_geo_adjacent_observed() -> dict:
             "totalStrictAll": sum(item["equalAdjacentAll"] for item in by_kind),
         },
         "focus": focus_payload,
+        "datasets": datasets,
         "byKind": by_kind,
         "details": details,
     }
@@ -384,6 +404,7 @@ def load_joint_probabilities() -> dict:
 def main() -> None:
     equal_rows = read_csv("equal_pair_counts.csv")
     pair_rows = read_csv("pair_counts.csv")
+    geo_adjacent = load_geo_adjacent_observed()
 
     pair_lookup = {
         compact_dataset_name(row["dataset"]): {
@@ -396,13 +417,19 @@ def main() -> None:
         }
         for row in pair_rows
     }
+    geo_lookup = {
+        row["dataset"]: row
+        for row in geo_adjacent.get("datasets", [])
+    }
 
     history = []
     for row in equal_rows:
         dataset = compact_dataset_name(row["dataset"])
         pairs = pair_lookup[dataset]
+        geo = geo_lookup.get(dataset, {})
         counts = {
             "stem": to_int(row["stem"]),
+            "edgeAdjacent": int(geo.get("edgeAdjacent", 0)),
             "sameSigungu": to_int(row["같은 구시군"]),
             "sameSido": to_int(row["광역권(시도)"]),
             "gwangjuJeonnam": to_int(row["광주+전남 통합"]),
@@ -411,6 +438,7 @@ def main() -> None:
         }
         denominators = {
             "stem": pairs["stemPairs"],
+            "edgeAdjacent": int(geo.get("edgeAdjacentPairs", 0)),
             "sameSigungu": pairs["sameSigunguPairs"],
             "sameSido": pairs["sameSidoPairs"],
             "gwangjuJeonnam": pairs["gwangjuJeonnamPairs"],
@@ -440,6 +468,13 @@ def main() -> None:
             "count": focus_counts["stem"],
             "denominator": focus_pairs["stemPairs"],
             "text": "송도1동·송도2동 같은 분할동 기준. 가장 좁은 비교범위다.",
+        },
+        {
+            "label": "경계 인접",
+            "value": f"{focus_counts['edgeAdjacent']:,}",
+            "count": focus_counts["edgeAdjacent"],
+            "denominator": focus_counts["denominators"]["edgeAdjacent"],
+            "text": "SGIS bnd_dong 읍면동 경계에서 실제 경계선을 공유한 같은 시군구 쌍(pair) 기준이다.",
         },
         {
             "label": "같은 구시군",
@@ -472,7 +507,7 @@ def main() -> None:
         "pairCounts": pair_lookup,
         "regionalObserved": load_regional_observed_details(focus_dataset),
         "regionalThresholds": load_regional_thresholds(),
-        "geoAdjacent": load_geo_adjacent_observed(),
+        "geoAdjacent": geo_adjacent,
         "jointProbabilities": load_joint_probabilities(),
         "nearMatch": {
             "model": "모델 2(Model 2): 지역적응형 사후예측 w=0.7",

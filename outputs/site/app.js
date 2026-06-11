@@ -7,14 +7,9 @@ const filters = document.querySelectorAll(".filter");
 const regionalBars = document.querySelector("#regional-bars");
 const regionalProbabilityBody = document.querySelector("#regional-probability-body");
 const regionalPairList = document.querySelector("#regional-pair-list");
-const geoAdjacentSummary = document.querySelector("#geo-adjacent-summary");
-const geoAdjacentCounts = document.querySelector("#geo-adjacent-counts");
-const geoAdjacentDetails = document.querySelector("#geo-adjacent-details");
 const nearMatchBody = document.querySelector("#near-match-body");
 const jointSummary = document.querySelector("#joint-summary");
 const jointProbabilityBody = document.querySelector("#joint-probability-body");
-
-const percentText = (value) => `${(Number(value || 0) * 100).toFixed(1)}%`;
 
 scopeGrid.innerHTML = scopeItems
   .map(
@@ -28,56 +23,6 @@ scopeGrid.innerHTML = scopeItems
     `,
   )
   .join("");
-
-if (geoAdjacentSummary && data.geoAdjacent?.focus) {
-  const focus = data.geoAdjacent.focus;
-  geoAdjacentSummary.innerHTML = `
-    <article>
-      <span>2026 지선 사전투표</span>
-      <strong>${focus.equalAdjacent.toLocaleString("ko-KR")}건</strong>
-      <p>같은 시군구 안에서 실제 경계를 맞댄 읍면동 동일득표쌍</p>
-    </article>
-    <article>
-      <span>비교한 인접쌍</span>
-      <strong>${focus.edgePairs.toLocaleString("ko-KR")}쌍</strong>
-      <p>${focus.boundary} SGIS 읍면동 경계 기준</p>
-    </article>
-    <article>
-      <span>경계 매칭률</span>
-      <strong>${percentText(focus.matchRate)}</strong>
-      <p>${focus.matchedRows.toLocaleString("ko-KR")} / ${focus.rows.toLocaleString("ko-KR")}개 투표구 매칭</p>
-    </article>
-  `;
-}
-
-if (geoAdjacentCounts && data.geoAdjacent?.byKind?.length) {
-  geoAdjacentCounts.innerHTML = data.geoAdjacent.byKind
-    .map(
-      (item) => `
-        <tr>
-          <td>${item.kind}</td>
-          <td>${item.equalAdjacent.toLocaleString("ko-KR")}건</td>
-          <td>${percentText(item.matchRateMin)}~${percentText(item.matchRateMax)}</td>
-        </tr>
-      `,
-    )
-    .join("");
-}
-
-if (geoAdjacentDetails && data.geoAdjacent?.details?.length) {
-  geoAdjacentDetails.innerHTML = data.geoAdjacent.details
-    .map(
-      (item) => `
-        <p>
-          <b>${item.dataset} · ${item.boundary}</b>
-          <span>${item.voteA.toLocaleString("ko-KR")} / ${item.voteB.toLocaleString("ko-KR")}</span>
-          <span>${item.region1}</span>
-          <span>${item.region2}</span>
-        </p>
-      `,
-    )
-    .join("");
-}
 
 if (regionalBars) {
   const maxObserved = Math.max(...data.regionalObserved.regions.map((item) => item.observed));
@@ -217,6 +162,7 @@ function renderRows(predicate = () => true) {
           <td>${row.dataset}</td>
           <td>${row.rows.toLocaleString("ko-KR")}</td>
           ${metricCell(row, "stem")}
+          ${metricCell(row, "edgeAdjacent")}
           ${metricCell(row, "sameSigungu")}
           ${metricCell(row, "gwangjuJeonnam")}
           ${metricCell(row, "national")}
